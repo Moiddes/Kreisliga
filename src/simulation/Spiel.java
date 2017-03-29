@@ -8,6 +8,9 @@ public class Spiel {
 		
 		//geändert
 		System.out.println("Hallo27");
+		
+		// Erstellt 
+		System.out.println("Hallo3");
 	}
 
 }
