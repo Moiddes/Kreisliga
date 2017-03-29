@@ -1,4 +1,5 @@
 package simulation;
+import manager.*;
 
 public class Spiel {
 
@@ -13,6 +14,9 @@ public class Spiel {
 		
 		// Erstellt 
 		System.out.println("Hallo3");
+		
+		Spieler Hans = new Spieler(30 , 80, 20);
+		
 	}
 	
 	static void kopfball(){
