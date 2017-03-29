@@ -12,5 +12,9 @@ public class Spiel {
 		// Erstellt 
 		System.out.println("Hallo3");
 	}
+	
+	static void kopfball(){
+		System.out.println("TOOOR");
+	}
 
 }
