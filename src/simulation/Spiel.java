@@ -87,7 +87,7 @@ public class Spiel {
 
 	static int Abpraller() {
 		// Soll den Wert der Verteidigenden und der Angreifenden Spieler vergleichen, um darauf zu rollen, ob die Verteidiger klären, oder 
-		// die Angreifer einen Nachschuss bekommen. Vorerst 50/50
+		// died Angreifer einen Nachschuss bekommen. Vorerst 50/50
 		double nachschuss= Math.random();
 		if (nachschuss <= 0.5){
 			//hier sollte noch ein offensiver Spieler der angreifenden Mannschaft gepullt werden
