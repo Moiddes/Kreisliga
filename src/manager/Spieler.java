@@ -30,12 +30,25 @@ public class Spieler {
 
 	}
 
+	
+	public int getGeschwindigkeit() {
+		return geschwindigkeit;
+	}
+
+	public void setGeschwindigkeit(int geschwindigkeit) {
+		if (geschwindigkeit <= 100 && geschwindigkeit >= 0) {
+			this.geschwindigkeit = geschwindigkeit;
+		}
+	}
+
 	public int getZweikampf() {
 		return zweikampf;
 	}
 
 	public void setZweikampf(int zweikampf) {
-		this.zweikampf = zweikampf;
+		if (zweikampf <= 100 && zweikampf >= 0) {
+			this.zweikampf = zweikampf;
+		}
 	}
 
 	public int getStellungsspiel() {
@@ -43,7 +56,9 @@ public class Spieler {
 	}
 
 	public void setStellungsspiel(int stellungsspiel) {
-		this.stellungsspiel = stellungsspiel;
+		if (stellungsspiel <= 100 && stellungsspiel >= 0) {
+			this.stellungsspiel = stellungsspiel;
+		}
 	}
 
 	public int getAusdauer() {
@@ -51,7 +66,9 @@ public class Spieler {
 	}
 
 	public void setAusdauer(int ausdauer) {
-		this.ausdauer = ausdauer;
+		if (ausdauer <= 100 && ausdauer >= 0) {
+			this.ausdauer = ausdauer;
+		}
 	}
 
 	public int getKopfball() {
@@ -59,7 +76,9 @@ public class Spieler {
 	}
 
 	public void setKopfball(int kopfball) {
-		this.kopfball = kopfball;
+		if (kopfball <= 100 && kopfball >= 0) {
+			this.kopfball = kopfball;
+		}
 	}
 
 	public int getMoral() {
@@ -67,7 +86,9 @@ public class Spieler {
 	}
 
 	public void setMoral(int moral) {
-		this.moral = moral;
+		if (moral <= 100 && moral >= 0) {
+			this.moral = moral;
+		}
 	}
 
 	public int getSelbstbewusstsein() {
@@ -75,7 +96,9 @@ public class Spieler {
 	}
 
 	public void setSelbstbewusstsein(int selbstbewusstsein) {
-		this.selbstbewusstsein = selbstbewusstsein;
+		if (selbstbewusstsein <= 100 && selbstbewusstsein >= 0) {
+			this.selbstbewusstsein = selbstbewusstsein;
+		}
 	}
 
 	public int getDisziplin() {
@@ -83,7 +106,9 @@ public class Spieler {
 	}
 
 	public void setDisziplin(int disziplin) {
-		this.disziplin = disziplin;
+		if (disziplin <= 100 && disziplin >= 0) {
+			this.disziplin = disziplin;
+		}
 	}
 
 	public int getAggresivitat() {
@@ -91,7 +116,9 @@ public class Spieler {
 	}
 
 	public void setAggresivitat(int aggresivitat) {
-		this.aggresivitat = aggresivitat;
+		if (aggresivitat <= 100 && aggresivitat >= 0) {
+			this.aggresivitat = aggresivitat;
+		}
 	}
 
 	public int getAntizipation() {
@@ -99,7 +126,9 @@ public class Spieler {
 	}
 
 	public void setAntizipation(int antizipation) {
-		this.antizipation = antizipation;
+		if (antizipation <= 100 && antizipation >= 0) {
+			this.antizipation = antizipation;
+		}
 	}
 
 	public int getTorwart() {
@@ -107,7 +136,9 @@ public class Spieler {
 	}
 
 	public void setTorwart(int torwart) {
-		this.torwart = torwart;
+		if (torwart <= 100 && torwart >= 0) {
+			this.torwart = torwart;
+		}
 	}
 
 	public int getSchuss() {
@@ -115,7 +146,9 @@ public class Spieler {
 	}
 
 	public void setSchuss(int schuss) {
-		this.schuss = schuss;
+		if (schuss <= 100 && schuss >= 0) {
+			this.schuss = schuss;
+		}
 	}
 
 	public int getFreistoss() {
@@ -123,7 +156,9 @@ public class Spieler {
 	}
 
 	public void setFreistoss(int freistoss) {
-		this.freistoss = freistoss;
+		if (freistoss <= 100 && freistoss >= 0) {
+			this.freistoss = freistoss;
+		}
 	}
 
 	public int getPass() {
@@ -131,7 +166,9 @@ public class Spieler {
 	}
 
 	public void setPass(int pass) {
-		this.pass = pass;
+		if (pass <= 100 && pass >= 0) {
+			this.pass = pass;
+		}
 	}
 
 	public int getDribbling() {
@@ -139,7 +176,9 @@ public class Spieler {
 	}
 
 	public void setDribbling(int dribbling) {
-		this.dribbling = dribbling;
+		if (dribbling <= 100 && dribbling >= 0) {
+			this.dribbling = dribbling;
+		}
 	}
 
 	public int getFlanken() {
@@ -147,23 +186,9 @@ public class Spieler {
 	}
 
 	public void setFlanken(int flanken) {
-		this.flanken = flanken;
-	}
-	
-	public String getTeam() {
-		return team;
-	}
-
-	public void setTeam(String team) {
-		this.team = team;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
+		if (flanken <= 100 && flanken >= 0) {
+			this.flanken = flanken;
+		}
 	}
 
 
