@@ -27,8 +27,12 @@ public class Spieler {
 	//Team Werte
 	private String team;
 	private String position;
+	private String firstname;
+	private String lastname;
 	
-	public Spieler() {
+	public Spieler(String firstname, String lastname) {
+		this.setFirstname(firstname);
+		this.setLastname(lastname);
 		//neutrale Werte
 		this.setGeschwindigkeit(this.randomInteger());
 		this.setZweikampf(this.randomInteger());
@@ -223,7 +227,19 @@ public class Spieler {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-
+	public String getFirstname() {
+		return firstname;
+	}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+	
 	private int randomInteger(){
 		Random r = new Random();
 		int Low = 1;
