@@ -1,5 +1,7 @@
 package manager;
 
+import java.util.Random;
+
 public class Spieler {
 
 	//neutrale Werte
@@ -25,9 +27,28 @@ public class Spieler {
 	//Team Werte
 	private String team;
 	private String position;
-
+	
 	public Spieler() {
-
+		//neutrale Werte
+		this.setGeschwindigkeit(this.randomInteger());
+		this.setZweikampf(this.randomInteger());
+		this.setStellungsspiel(this.randomInteger());
+		this.setAusdauer(this.randomInteger());
+		this.setKopfball(this.randomInteger());
+		//mentale Werte
+		this.setMoral(this.randomInteger());
+		this.setSelbstbewusstsein(this.randomInteger());
+		this.setDisziplin(this.randomInteger());
+		this.setAggresivitat(this.randomInteger());
+		//defensive Werte
+		this.setAntizipation(this.randomInteger());
+		this.setTorwart(this.randomInteger());
+		//offensive Werte
+		this.setSchuss(this.randomInteger());
+		this.setFreistoss(this.randomInteger());
+		this.setPass(this.randomInteger());
+		this.setDribbling(this.randomInteger());
+		this.setFlanken(this.randomInteger());
 	}
 
 	
@@ -190,8 +211,30 @@ public class Spieler {
 			this.flanken = flanken;
 		}
 	}
+	public String getTeam() {
+		return team;
+	}
+	public void setTeam(String team) {
+		this.team = team;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
 
-
-
-
+	private int randomInteger(){
+		Random r = new Random();
+		int Low = 1;
+		int High = 100;
+		int Result = r.nextInt(High+1-Low) + Low;
+		return Result;
+	}
+	
+	private int randomIntegerbetween(int Low, int High){
+		Random r = new Random();
+		int Result = r.nextInt(High+1-Low) + Low;
+		return Result;
+	}
 }
