@@ -7,8 +7,12 @@ public class Spiel {
 	public static int time = 0;
 	public static void main(String[] args) {
 		
-
-
+		Team ScHille = new Team();
+		System.out.println(ScHille.getPlayerNames());
+		String player = ScHille.getPlayerNames().get(0);
+		System.out.println(player);
+		System.out.println(ScHille.getTeam().get(player).getAggresivitat());
+		
 
 	}
 
