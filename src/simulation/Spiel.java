@@ -1,26 +1,54 @@
 package simulation;
+import java.util.Random;
+
 import manager.*;
 
 public class Spiel {
 
-
+	public static int halbzeit = 1;
 	public static int time = 0;
+	public static int ThisEvent= 0;
+	public static Team HeimTeam;
+	public static Team Auswärtsteam;
 	public static void main(String[] args) {
+
+		HeimTeam = new Team("ScHille");
+		Auswärtsteam = new Team("Real Madrid");
 		
-		Team ScHille = new Team();
-		System.out.println(ScHille.getPlayerNames());
-		String player = ScHille.getPlayerNames().get(0);
+		
+		System.out.println(HeimTeam.getPlayerNames());
+		String player = HeimTeam.getPlayerNames().get(0);
 		System.out.println(player);
-		System.out.println(ScHille.getTeam().get(player).getAggresivitat());
-		
+		System.out.println(HeimTeam.getTeam().get(player).getAggresivitat());
+		while (time <45) {
+			ThisEvent = randomIntegerbetween(0,  10);
+			switch  (ThisEvent){
+			
+			case 0 : ThisEvent = pullEvent();
+			break;
+
+			case 1 : ThisEvent = kopfballduell();
+			break;
+			
+			}
+		}
+
 
 	}
 
 
 
-	
-	
-	
+
+
+	static int pullEvent () {
+		if (time == 0) {
+			System.out.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen" + HeimTeam.getTeamName() + "und" + Auswärtsteam.getTeamName());
+		}
+		System.out.println("Das Spiel dümpelt vor sich hin");
+		return randomIntegerbetween(0,10);
+				
+		
+	}
 
 	static int kopfballduell(Spieler Verteidiger, Spieler Angreifer){
 		double Schranke =0.01 * ( 50 + Angreifer.getKopfball() - Verteidiger.getKopfball());
@@ -82,10 +110,10 @@ public class Spiel {
 				System.out.println("Und lässt zur Ecke klatschen");
 				return 5;
 			}
-				else {
-					System.out.println("Und er klatscht nach vorne");
-					return 4;
-				}
+			else {
+				System.out.println("Und er klatscht nach vorne");
+				return 4;
+			}
 		}
 	}
 
@@ -96,21 +124,25 @@ public class Spiel {
 		if (nachschuss <= 0.5){
 			//hier sollte noch ein offensiver Spieler der angreifenden Mannschaft gepullt werden
 			System.out.println("Direkt vor die Füße von ");
-		return 6;
-	}
+			return 6;
+		}
 		else {
 			System.out.println("Aber ... kann klären");
 			return 0;
+		}
+
+
 	}
 
 
-}
 
 
-
-
-
-
+	//sollte irgendwann evtl in eine eigene Klasse
+	private static int randomIntegerbetween(int Low, int High){
+		Random r = new Random();
+		int Result = r.nextInt(High+1-Low) + Low;
+		return Result;
+	}
 
 
 }

@@ -10,6 +10,18 @@ import java.util.Random;
 public class Team {
 	private Map<String, Spieler> team = new HashMap<String, Spieler>();
 	private List<String> playerNames = new ArrayList<String>();  
+	private String teamName;
+	
+	public Team(String name) {
+		for(int k=0; k <= 15; k++){
+			String lastName = this.LastNameGenerator();
+			String firstName = this.FirstNameGenerator();
+			this.playerNames.add(firstName + lastName);
+			this.team.put(firstName + lastName, new Spieler(firstName, lastName));
+			this.setTeamName(name);
+		}
+		
+	}
 	
 	public Team() {
 		for(int k=0; k <= 15; k++){
@@ -49,6 +61,17 @@ public class Team {
 
 	public List<String> getPlayerNames() {
 		return playerNames;
+	}
+
+
+	public String getTeamName() {
+		return teamName;
+	}
+
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+		
 	}
 	
 
