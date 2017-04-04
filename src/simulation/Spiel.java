@@ -1,5 +1,8 @@
 package simulation;
+import java.util.List;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import manager.*;
 
@@ -10,28 +13,32 @@ public class Spiel {
 	public static int ThisEvent= 0;
 	public static Team HeimTeam;
 	public static Team Auswärtsteam;
+	
 	public static void main(String[] args) {
 
-		HeimTeam = new Team("ScHille");
-		Auswärtsteam = new Team("Real Madrid");
+		HeimTeam = new Team("Sc Hille");
+		Auswärtsteam = new Team("Real Madrid"); //TODO macht ein 'ä' im Code nicht Probleme?
 		
-		
+// Position doch nicht als enum, wahrscheinlich mehr vorteile es als string zu speichern	
+//		Position[] spielSystemHeim = new Position[]{Position.TW, LI, MD, MD, DM, DM, LM, RM, ZM, ST, ST}; 
+
 		System.out.println(HeimTeam.getPlayerNames());
 		String player = HeimTeam.getPlayerNames().get(0);
 		System.out.println(player);
 		System.out.println(HeimTeam.getTeam().get(player).getAggresivitat());
-		while (time <45) {
-			ThisEvent = randomIntegerbetween(0,  10);
-			switch  (ThisEvent){
-			
-			case 0 : ThisEvent = pullEvent();
-			break;
 
-			case 1 : ThisEvent = kopfballduell();
-			break;
-			
-			}
-		}
+		//		while (time <45) {
+		//			ThisEvent = randomIntegerbetween(0,  10);
+		//			switch  (ThisEvent){
+		//			
+		//			case 0 : ThisEvent = pullEvent();
+		//			break;
+		//
+		//			case 1 : ThisEvent = kopfballduell();
+		//			break;
+		//			
+		//			}
+		//		}
 
 
 	}
@@ -46,10 +53,12 @@ public class Spiel {
 		}
 		System.out.println("Das Spiel dümpelt vor sich hin");
 		return randomIntegerbetween(0,10);
-				
-		
-	}
 
+
+	}
+	
+	//TODO Events so umschreiben, dass sie mit listen von Spielern arbeiten. Man könnte dann Funktionen schreiben, die zB alle offensiven oder
+	//alle linken offensiven Spieler eines Systems zurückgeben, siehe Bsp unten
 	static int kopfballduell(Spieler Verteidiger, Spieler Angreifer){
 		double Schranke =0.01 * ( 50 + Angreifer.getKopfball() - Verteidiger.getKopfball());
 
@@ -134,6 +143,7 @@ public class Spiel {
 
 	}
 
+	// Methode, die alle offensiven Spieler eines Systems zurückgibt
 
 
 
@@ -143,6 +153,5 @@ public class Spiel {
 		int Result = r.nextInt(High+1-Low) + Low;
 		return Result;
 	}
-
 
 }
