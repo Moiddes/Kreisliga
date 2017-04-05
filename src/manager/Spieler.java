@@ -1,6 +1,9 @@
 package manager;
 
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
+
+import tools.*;
 
 public class Spieler {
 
@@ -24,42 +27,48 @@ public class Spieler {
 	private int pass;
 	private int dribbling;
 	private int flanken;
+	//feste Werte
+	private String fuss; //mögliche Werte (links, rechts, beidfüßig)
 	//Team Werte
 	private String team;
-	private Position position;
+	private String position; //mögliche Werte (TW, LI, MD, IV, LV, RV, DM, LM, ZM, RM, OM, ST)
+	private String favPosition;
 	private String firstname;
 	private String lastname;
+	//sim Werte	
+	private boolean busy;
+	
+	static RandomInt r = new RandomInt();
 
 	public Spieler(String firstname, String lastname) {
 		this.setFirstname(firstname);
 		this.setLastname(lastname);
 		//neutrale Werte
-		this.setGeschwindigkeit(this.randomInteger());
-		this.setZweikampf(this.randomInteger());
-		this.setStellungsspiel(this.randomInteger());
-		this.setAusdauer(this.randomInteger());
-		this.setKopfball(this.randomInteger());
+		this.setGeschwindigkeit(r.randomInteger());
+		this.setZweikampf(r.randomInteger());
+		this.setStellungsspiel(r.randomInteger());
+		this.setAusdauer(r.randomInteger());
+		this.setKopfball(r.randomInteger());
 		//mentale Werte
-		this.setMoral(this.randomInteger());
-		this.setSelbstbewusstsein(this.randomInteger());
-		this.setDisziplin(this.randomInteger());
-		this.setAggresivitat(this.randomInteger());
+		this.setMoral(r.randomInteger());
+		this.setSelbstbewusstsein(r.randomInteger());
+		this.setDisziplin(r.randomInteger());
+		this.setAggresivitat(r.randomInteger());
 		//defensive Werte
-		this.setAntizipation(this.randomInteger());
-		this.setTorwart(this.randomInteger());
+		this.setAntizipation(r.randomInteger());
+		this.setTorwart(r.randomInteger());
 		//offensive Werte
-		this.setSchuss(this.randomInteger());
-		this.setFreistoss(this.randomInteger());
-		this.setPass(this.randomInteger());
-		this.setDribbling(this.randomInteger());
-		this.setFlanken(this.randomInteger());
+		this.setSchuss(r.randomInteger());
+		this.setFreistoss(r.randomInteger());
+		this.setPass(r.randomInteger());
+		this.setDribbling(r.randomInteger());
+		this.setFlanken(r.randomInteger());
+		this.setBusy(false);
 	}
-
 
 	public int getGeschwindigkeit() {
 		return geschwindigkeit;
 	}
-
 	public void setGeschwindigkeit(int geschwindigkeit) {
 		if (geschwindigkeit <= 100 && geschwindigkeit >= 0) {
 			this.geschwindigkeit = geschwindigkeit;
@@ -69,17 +78,15 @@ public class Spieler {
 	public int getZweikampf() {
 		return zweikampf;
 	}
-
 	public void setZweikampf(int zweikampf) {
 		if (zweikampf <= 100 && zweikampf >= 0) {
 			this.zweikampf = zweikampf;
 		}
 	}
-
+	
 	public int getStellungsspiel() {
 		return stellungsspiel;
 	}
-
 	public void setStellungsspiel(int stellungsspiel) {
 		if (stellungsspiel <= 100 && stellungsspiel >= 0) {
 			this.stellungsspiel = stellungsspiel;
@@ -89,7 +96,6 @@ public class Spieler {
 	public int getAusdauer() {
 		return ausdauer;
 	}
-
 	public void setAusdauer(int ausdauer) {
 		if (ausdauer <= 100 && ausdauer >= 0) {
 			this.ausdauer = ausdauer;
@@ -99,7 +105,6 @@ public class Spieler {
 	public int getKopfball() {
 		return kopfball;
 	}
-
 	public void setKopfball(int kopfball) {
 		if (kopfball <= 100 && kopfball >= 0) {
 			this.kopfball = kopfball;
@@ -109,17 +114,15 @@ public class Spieler {
 	public int getMoral() {
 		return moral;
 	}
-
 	public void setMoral(int moral) {
 		if (moral <= 100 && moral >= 0) {
 			this.moral = moral;
 		}
 	}
-
+	
 	public int getSelbstbewusstsein() {
 		return selbstbewusstsein;
 	}
-
 	public void setSelbstbewusstsein(int selbstbewusstsein) {
 		if (selbstbewusstsein <= 100 && selbstbewusstsein >= 0) {
 			this.selbstbewusstsein = selbstbewusstsein;
@@ -129,7 +132,6 @@ public class Spieler {
 	public int getDisziplin() {
 		return disziplin;
 	}
-
 	public void setDisziplin(int disziplin) {
 		if (disziplin <= 100 && disziplin >= 0) {
 			this.disziplin = disziplin;
@@ -139,7 +141,6 @@ public class Spieler {
 	public int getAggresivitat() {
 		return aggresivitat;
 	}
-
 	public void setAggresivitat(int aggresivitat) {
 		if (aggresivitat <= 100 && aggresivitat >= 0) {
 			this.aggresivitat = aggresivitat;
@@ -149,7 +150,6 @@ public class Spieler {
 	public int getAntizipation() {
 		return antizipation;
 	}
-
 	public void setAntizipation(int antizipation) {
 		if (antizipation <= 100 && antizipation >= 0) {
 			this.antizipation = antizipation;
@@ -159,7 +159,6 @@ public class Spieler {
 	public int getTorwart() {
 		return torwart;
 	}
-
 	public void setTorwart(int torwart) {
 		if (torwart <= 100 && torwart >= 0) {
 			this.torwart = torwart;
@@ -169,7 +168,6 @@ public class Spieler {
 	public int getSchuss() {
 		return schuss;
 	}
-
 	public void setSchuss(int schuss) {
 		if (schuss <= 100 && schuss >= 0) {
 			this.schuss = schuss;
@@ -179,7 +177,6 @@ public class Spieler {
 	public int getFreistoss() {
 		return freistoss;
 	}
-
 	public void setFreistoss(int freistoss) {
 		if (freistoss <= 100 && freistoss >= 0) {
 			this.freistoss = freistoss;
@@ -189,7 +186,6 @@ public class Spieler {
 	public int getPass() {
 		return pass;
 	}
-
 	public void setPass(int pass) {
 		if (pass <= 100 && pass >= 0) {
 			this.pass = pass;
@@ -199,7 +195,6 @@ public class Spieler {
 	public int getDribbling() {
 		return dribbling;
 	}
-
 	public void setDribbling(int dribbling) {
 		if (dribbling <= 100 && dribbling >= 0) {
 			this.dribbling = dribbling;
@@ -209,48 +204,67 @@ public class Spieler {
 	public int getFlanken() {
 		return flanken;
 	}
-
 	public void setFlanken(int flanken) {
 		if (flanken <= 100 && flanken >= 0) {
 			this.flanken = flanken;
 		}
 	}
+	
+	public String getFuss() {
+		return fuss;
+	}
+	public void setFuss(String fuss) {
+		this.fuss = fuss;
+	}
+
 	public String getTeam() {
 		return team;
 	}
 	public void setTeam(String team) {
 		this.team = team;
 	}
+	
 	public String getFirstname() {
 		return firstname;
 	}
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
+	
 	public String getLastname() {
 		return lastname;
 	}
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	public Position getPosition() {
+	
+	public String getPosition() {
 		return position;
 	}
-	public void setPosition(Position position) {
+	public void setPosition(String position) {
 		this.position = position;
 	}
 
-	private int randomInteger(){
-		Random r = new Random();
-		int Low = 1;
-		int High = 100;
-		int Result = r.nextInt(High+1-Low) + Low;
-		return Result;
+	public boolean isBusy() {
+		return busy;
+	}
+	public void setBusy(boolean busy) {
+		this.busy = busy;
 	}
 
-	private int randomIntegerbetween(int Low, int High){
-		Random r = new Random();
-		int Result = r.nextInt(High+1-Low) + Low;
-		return Result;
+	public void updateFavPosition(){
+		Map<String, Float> positionValues = new HashMap<String, Float>();
+		positionValues.put("TW", (float)this.torwart);
+		positionValues.put("LI", (float)(this.stellungsspiel + this.antizipation + this.zweikampf)/3);
+		positionValues.put("MD", (float)(this.stellungsspiel + this.geschwindigkeit + this.zweikampf)/3);
+		positionValues.put("IV", (float)(this.stellungsspiel + this.antizipation + this.zweikampf + this.geschwindigkeit)/4);
+		positionValues.put("LV", (float)(this.stellungsspiel + this.geschwindigkeit + this.zweikampf)/3);
+		positionValues.put("LI", (float)(this.stellungsspiel + this.antizipation + this.zweikampf)/3);
+		positionValues.put("MD", (float)(this.stellungsspiel + this.geschwindigkeit + this.zweikampf)/3);
+		positionValues.put("LI", (float)(this.stellungsspiel + this.antizipation + this.zweikampf)/3);
+		positionValues.put("MD", (float)(this.stellungsspiel + this.geschwindigkeit + this.zweikampf)/3);
+		positionValues.put("LI", (float)(this.stellungsspiel + this.antizipation + this.zweikampf)/3);
+		positionValues.put("MD", (float)(this.stellungsspiel + this.geschwindigkeit + this.zweikampf)/3);
+		
 	}
 }

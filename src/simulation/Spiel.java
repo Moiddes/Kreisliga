@@ -1,10 +1,12 @@
 package simulation;
 import java.util.List;
 import java.util.Random;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import manager.*;
+import tools.*;
 
 public class Spiel {
 
@@ -14,10 +16,14 @@ public class Spiel {
 	public static Team HeimTeam;
 	public static Team Auswärtsteam;
 	
+	private static PrintStream p = System.out;
+	static RandomInt r = new RandomInt();
+	
 	public static void main(String[] args) {
 
 		HeimTeam = new Team("Sc Hille");
-		Auswärtsteam = new Team("Real Madrid"); //TODO macht ein 'ä' im Code nicht Probleme?
+		Auswärtsteam = new Team(); //TODO macht ein 'ä' im Code nicht Probleme?
+		p.println(Auswärtsteam.getTeamName());
 		
 // Position doch nicht als enum, wahrscheinlich mehr vorteile es als string zu speichern	
 //		Position[] spielSystemHeim = new Position[]{Position.TW, LI, MD, MD, DM, DM, LM, RM, ZM, ST, ST}; 
@@ -26,9 +32,16 @@ public class Spiel {
 		String player = HeimTeam.getPlayerNames().get(0);
 		System.out.println(player);
 		System.out.println(HeimTeam.getTeam().get(player).getAggresivitat());
+		
+		HeimTeam.addSpieler(new Spieler("Hans", "Sarpei"));
+		System.out.println(HeimTeam.getPlayerNames());
+		System.out.println(HeimTeam.getTeam().get("HansSarpei").getAggresivitat());
+		HeimTeam.removeSpieler("HansSarpei");
+		System.out.println(HeimTeam.getPlayerNames());
+		HeimTeam.removeSpieler("HansSarpei");
 
 		//		while (time <45) {
-		//			ThisEvent = randomIntegerbetween(0,  10);
+		//			ThisEvent = r.randomIntegerbetween(0,  10);
 		//			switch  (ThisEvent){
 		//			
 		//			case 0 : ThisEvent = pullEvent();
@@ -52,7 +65,7 @@ public class Spiel {
 			System.out.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen" + HeimTeam.getTeamName() + "und" + Auswärtsteam.getTeamName());
 		}
 		System.out.println("Das Spiel dümpelt vor sich hin");
-		return randomIntegerbetween(0,10);
+		return r.randomIntegerbetween(0,10);
 
 
 	}
@@ -146,12 +159,5 @@ public class Spiel {
 	// Methode, die alle offensiven Spieler eines Systems zurückgibt
 
 
-
-	//sollte irgendwann evtl in eine eigene Klasse
-	private static int randomIntegerbetween(int Low, int High){
-		Random r = new Random();
-		int Result = r.nextInt(High+1-Low) + Low;
-		return Result;
-	}
 
 }
