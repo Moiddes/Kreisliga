@@ -67,6 +67,33 @@ public class Spieler {
 		this.setBusy(false);
 	}
 
+	public Spieler(String firstname, String lastname, String position) { //TODO constructoren für versch. Spieler schreiben
+		this.setFirstname(firstname);
+		this.setLastname(lastname);
+		this.setPosition(position);
+		//neutrale Werte
+		this.setGeschwindigkeit(r.randomInteger());
+		this.setZweikampf(r.randomInteger());
+		this.setStellungsspiel(r.randomInteger());
+		this.setAusdauer(r.randomInteger());
+		this.setKopfball(r.randomInteger());
+		//mentale Werte
+		this.setMoral(r.randomInteger());
+		this.setSelbstbewusstsein(r.randomInteger());
+		this.setDisziplin(r.randomInteger());
+		this.setAggresivitat(r.randomInteger());
+		//defensive Werte
+		this.setAntizipation(r.randomInteger());
+		this.setTorwart(r.randomInteger());
+		//offensive Werte
+		this.setSchuss(r.randomInteger());
+		this.setFreistoss(r.randomInteger());
+		this.setPass(r.randomInteger());
+		this.setDribbling(r.randomInteger());
+		this.setFlanken(r.randomInteger());
+		
+		this.setBusy(false);
+	}
 	public int getGeschwindigkeit() {
 		return geschwindigkeit;
 	}
@@ -244,8 +271,7 @@ public class Spieler {
 	}
 	public void setPosition(String position) {
 		this.position = position;
-	}
-	
+	}	
 
 	public String getFavPosition() {
 		return favPosition;

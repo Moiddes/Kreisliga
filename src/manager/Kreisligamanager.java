@@ -17,7 +17,6 @@ public class Kreisligamanager {
 		Heimteam = new Team("Sc Hille");
 		Auswaertsteam = new Team(); 
 
-		System.out.println(Heimteam.getPlayerNames());
 		int TW = 0; int LI= 0; int MD= 0; int IV= 0; int LV= 0; int DM= 0; int LM= 0; int ZM= 0; int OM= 0; int ST= 0;
 
 		for(int i=0; i<10000; i++){
