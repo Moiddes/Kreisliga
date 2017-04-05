@@ -10,48 +10,54 @@ import tools.*;
 
 public class Spiel {
 
-	public static int halbzeit = 1;
-	public static int time = 0;
-	public static int ThisEvent= 0;
-	public static Team HeimTeam;
-	public static Team Auswärtsteam;
-	
+	public  int halbzeit = 1;
+	public int time = 0;
+	public int ThisEvent= 0;
+	public Team Heimteam;
+	public Team Auswaertsteam;
+	public Team Angriff;
+	public Team Verteidigung;
+
 	private static PrintStream p = System.out;
 	static RandomInt r = new RandomInt();
-	
-	public static void main(String[] args) {
 
-		HeimTeam = new Team("Sc Hille");
-		Auswärtsteam = new Team(); //TODO macht ein 'ä' im Code nicht Probleme?
-		p.println(Auswärtsteam.getTeamName());
-		
-// Position doch nicht als enum, wahrscheinlich mehr vorteile es als string zu speichern	
-//		Position[] spielSystemHeim = new Position[]{Position.TW, LI, MD, MD, DM, DM, LM, RM, ZM, ST, ST}; 
+	public  void spielsimulation (Team Heimteam, Team Auswaertsteam) {
 
-		System.out.println(HeimTeam.getPlayerNames());
-		String player = HeimTeam.getPlayerNames().get(0);
+				p.println(Auswaertsteam.getTeamName());
+
+		// Position doch nicht als enum, wahrscheinlich mehr vorteile es als string zu speichern	
+		//		Position[] spielSystemHeim = new Position[]{Position.TW, LI, MD, MD, DM, DM, LM, RM, ZM, ST, ST}; 
+
+		System.out.println(Heimteam.getPlayerNames());
+		String player = Heimteam.getPlayerNames().get(0);
 		System.out.println(player);
-		System.out.println(HeimTeam.getTeam().get(player).getAggresivitat());
-		
-		HeimTeam.addSpieler(new Spieler("Hans", "Sarpei"));
-		System.out.println(HeimTeam.getPlayerNames());
-		System.out.println(HeimTeam.getTeam().get("HansSarpei").getAggresivitat());
-		HeimTeam.removeSpieler("HansSarpei");
-		System.out.println(HeimTeam.getPlayerNames());
-		HeimTeam.removeSpieler("HansSarpei");
+		System.out.println(Heimteam.getTeam().get(player).getAggresivitat());
 
-		//		while (time <45) {
-		//			ThisEvent = r.randomIntegerbetween(0,  10);
-		//			switch  (ThisEvent){
-		//			
-		//			case 0 : ThisEvent = pullEvent();
-		//			break;
-		//
-		//			case 1 : ThisEvent = kopfballduell();
-		//			break;
-		//			
-		//			}
-		//		}
+		Heimteam.addSpieler(new Spieler("Hans", "Sarpei"));
+		System.out.println(Heimteam.getPlayerNames());
+		System.out.println(Heimteam.getTeam().get("HansSarpei").getAggresivitat());
+		Heimteam.removeSpieler("HansSarpei");
+		System.out.println(Heimteam.getPlayerNames());
+		Heimteam.removeSpieler("HansSarpei");
+		ThisEvent =0; 
+		while (time <45) {
+
+
+			switch  (ThisEvent){
+
+			case 0 : 
+				ThisEvent = pullEvent();
+				time += 2;
+				break;
+
+			case 1 :
+				
+
+//				ThisEvent = kopfballduell();
+//				break;
+
+			}
+		}
 
 
 	}
@@ -60,24 +66,31 @@ public class Spiel {
 
 
 
-	static int pullEvent () {
+	private int pullEvent () {
 		if (time == 0) {
-			System.out.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen" + HeimTeam.getTeamName() + "und" + Auswärtsteam.getTeamName());
+			System.out.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen" + Heimteam.getTeamName() + "und" + Auswaertsteam.getTeamName());
 		}
 		System.out.println("Das Spiel dümpelt vor sich hin");
+		int a = r.randomIntegerbetween(0,100);
+		if (a < 50) {
+			Angriff = Heimteam;
+			Verteidigung= Auswaertsteam;
+		}
+		
 		return r.randomIntegerbetween(0,10);
 
 
 	}
-	
+
 	//TODO Events so umschreiben, dass sie mit listen von Spielern arbeiten. Man könnte dann Funktionen schreiben, die zB alle offensiven oder
 	//alle linken offensiven Spieler eines Systems zurückgeben, siehe Bsp unten
-	static int kopfballduell(Spieler Verteidiger, Spieler Angreifer){
+	private int kopfballduell(Spieler Verteidiger, Spieler Angreifer){
 		double Schranke =0.01 * ( 50 + Angreifer.getKopfball() - Verteidiger.getKopfball());
 
 		double rnd = Math.random();
 
 		if ( rnd <= Schranke) {
+
 			System.out.println("Er köpft...");
 			return 2;
 		}
@@ -88,7 +101,7 @@ public class Spiel {
 	}
 
 
-	static int kopfball(Spieler Angreifer){
+	private int kopfball(Spieler Angreifer){
 		double Schranke =0.01 * (Angreifer.getKopfball());
 
 		double rnd = Math.random();
@@ -104,7 +117,7 @@ public class Spiel {
 			return 0;
 		}
 	}
-	static int kopfballAufsTor(Spieler Torwart, Spieler Angreifer){
+	private int kopfballAufsTor(Spieler Torwart, Spieler Angreifer){
 		double Schranke =0.01 * ( 50 + Angreifer.getKopfball() - Torwart.getTorwart());
 
 		double rnd = Math.random();
@@ -139,7 +152,7 @@ public class Spiel {
 		}
 	}
 
-	static int Abpraller() {
+	private int Abpraller() {
 		// Soll den Wert der Verteidigenden und der Angreifenden Spieler vergleichen, um darauf zu rollen, ob die Verteidiger klären, oder 
 		// died Angreifer einen Nachschuss bekommen. Vorerst 50/50
 		double nachschuss= Math.random();
@@ -159,5 +172,9 @@ public class Spiel {
 	// Methode, die alle offensiven Spieler eines Systems zurückgibt
 
 
-
+public Spiel() {
+	
 }
+}
+		
+
