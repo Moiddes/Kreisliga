@@ -104,4 +104,12 @@ public class Team {
 		}
 
 	}
+	
+	public Spieler getPlayerExcept(String... strings){
+		return 
+	}
+	
+	public Spieler getPlayerFrom(String... strings){
+		
+	}
 }
