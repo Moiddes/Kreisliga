@@ -17,4 +17,10 @@ public class RandomInt {
 		int Result = r.nextInt(High+1-Low) + Low;
 		return Result;
 	}
+	
+	public int randomIntegerGauss(int Average){
+		Random r = new Random();
+		int Result = (int) (r.nextGaussian()*Average/10 + Average);
+		return Result;
+	}
 }

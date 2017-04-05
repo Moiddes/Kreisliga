@@ -18,8 +18,8 @@ public class Team {
 		for(int k=0; k <= 15; k++){
 			String lastName = this.LastNameGenerator();
 			String firstName = this.FirstNameGenerator();
-			this.playerNames.add(firstName + lastName);
-			this.team.put(firstName + lastName, new Spieler(firstName, lastName));			
+			this.playerNames.add(firstName + " " + lastName);
+			this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName));			
 		}
 
 	}
@@ -29,8 +29,8 @@ public class Team {
 		for(int k=0; k <= 15; k++){
 			String lastName = this.LastNameGenerator();
 			String firstName = this.FirstNameGenerator();
-			this.playerNames.add(firstName + lastName);
-			this.team.put(firstName + lastName, new Spieler(firstName, lastName));
+			this.playerNames.add(firstName + " " + lastName);
+			this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName));
 		}
 
 	}
@@ -105,11 +105,11 @@ public class Team {
 
 	}
 	
-	public Spieler getPlayerExcept(String... strings){
-		return 
-	}
-	
-	public Spieler getPlayerFrom(String... strings){
-		
-	}
+//	public Spieler getPlayerExcept(String... strings){
+//		return 
+//	}
+//	
+//	public Spieler getPlayerFrom(String... strings){
+//		
+//	}
 }
