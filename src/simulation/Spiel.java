@@ -17,13 +17,15 @@ public class Spiel {
 	public Team Auswaertsteam;
 	public Team Angriff;
 	public Team Verteidigung;
-
+	private Spieler PassSpieler; 
+	private Spieler PassEmpfaenger;
+	private Spieler PassGegner;
 	private static PrintStream p = System.out;
 	static RandomInt r = new RandomInt();
 
 	public  void spielsimulation (Team Heimteam, Team Auswaertsteam) {
 
-				p.println(Auswaertsteam.getTeamName());
+		p.println(Auswaertsteam.getTeamName());
 
 		// Position doch nicht als enum, wahrscheinlich mehr vorteile es als string zu speichern	
 		//		Position[] spielSystemHeim = new Position[]{Position.TW, LI, MD, MD, DM, DM, LM, RM, ZM, ST, ST}; 
@@ -45,22 +47,66 @@ public class Spiel {
 
 			switch  (ThisEvent){
 
+			// PULLEVENT
 			case 0 : 
 				ThisEvent = pullEvent();
 				time += 2;
 				break;
 
+				//LANGER PASS AUF AUSSEN
 			case 1 :
+
+				 PassSpieler =  Angriff.getPlayerExcept("ST");
+				 PassEmpfaenger = Angriff.getPlayerFrom ("LM", "RM", "LV", "RV");
+				 PassGegner = null;
+				p.println(PassSpieler.getLastname() + " eröffnet mit einem Pass auf die Außenbahn");
+				if (PassEmpfaenger.getPosition() == "LM" || PassEmpfaenger.getPosition() == "LV")
+					PassGegner = Verteidigung.getPlayerFrom("RM", "RV");
+				else 
+					PassGegner = Verteidigung.getPlayerFrom("LM", "LV");
+
+				int Passqualitaet = Pass(PassSpieler);
+				if (Passqualitaet == 3) {
+					p.println("Ein Wahnsinnspass " + PassGegner.getLastname() + " hat da keine Chance");
+					ThisEvent= 2;
+					break;
+				}
+				else if (Passqualitaet == 2) {
+					p.println("Der Pass kommt ganz gut");
+					ThisEvent = Laufduell(Passqualitaet, PassEmpfaenger, PassGegner);
+					break;
+				}
+				else if (Passqualitaet == 1 ){
+					p.println("Das ist ein lausiger Pass!");
+					ThisEvent = Laufduell(Passqualitaet, PassEmpfaenger, PassGegner);
+					break;
+				}
+				else
+					p.println("Wo wandert der denn hin?");
+				ThisEvent = 0;
+				break;
+
+				// Spieler mit Ball auf außen
+			case 2 : 
 				
-
-//				ThisEvent = kopfballduell();
-//				break;
-
-			}
+				int Schranke = 50 + ( -50 + PassEmpfaenger.getSelbstbewusstsein());
+				int roll = r.randomIntegerbetween(0, 100);
+				if (roll <= Schranke) {
+					p.println("Der Junge zieht nach Innen!");
+					ThisEvent = NachInnenZiehen( PassEmpfaenger);
+					
+				}
+				else {
+					p.println("Er nimmt den Ball mit und begibt sich in Flankenposition");
+					ThisEvent = Flanke(PassEmpfaenger);
+				}
+					
+				
+			}	
 		}
-
-
 	}
+
+
 
 
 
@@ -76,20 +122,69 @@ public class Spiel {
 			Angriff = Heimteam;
 			Verteidigung= Auswaertsteam;
 		}
-		
+		else {
+			Angriff = Auswaertsteam;
+			Verteidigung= Heimteam;
+		}
+
 		return r.randomIntegerbetween(0,10);
 
 
 	}
+
+
+	private int Pass(Spieler PassSpieler) {
+		p.println(PassSpieler.getLastname() + " spielt den Pass");
+		int Schranke = PassSpieler.getPass();
+		int roll = r.randomIntegerbetween(0, 100);
+		if (roll <= Schranke) {
+			return 1+ roll / (Schranke/3);	
+		}
+		else return 0;
+				
+
+	}
+
+	private int Laufduell(int Qualitaet, Spieler Empfaenger, Spieler Gegner)	{
+		int Schranke = 50 + Qualitaet + Empfaenger.getGeschwindigkeit() + Empfaenger.getStellungsspiel() - Gegner.getGeschwindigkeit() - Gegner.getStellungsspiel();
+		int roll =	r.randomIntegerbetween(0, 100);
+
+		if (roll <= Schranke) {
+			p.println(Empfaenger.getLastname() + " nimmt den Klasse mit");
+			return 2;
+		}
+		else {
+			p.println(Gegner.getLastname() + " ist schneller am Ball und klärt");
+			return 0;
+
+		}
+
+
+	}
+	
+	
+	private int NachInnenZiehen(Spieler Angreifer) {
+		return 0;
+	}
+
+	private int Flanke (Spieler Flankengeber){
+		return 0;
+	}
+
+
+
+
+
+
 
 	//TODO Events so umschreiben, dass sie mit listen von Spielern arbeiten. Man könnte dann Funktionen schreiben, die zB alle offensiven oder
 	//alle linken offensiven Spieler eines Systems zurückgeben, siehe Bsp unten
 	private int kopfballduell(Spieler Verteidiger, Spieler Angreifer){
 		double Schranke =0.01 * ( 50 + Angreifer.getKopfball() - Verteidiger.getKopfball());
 
-		double rnd = Math.random();
+		double roll = Math.random();
 
-		if ( rnd <= Schranke) {
+		if ( roll <= Schranke) {
 
 			System.out.println("Er köpft...");
 			return 2;
@@ -104,9 +199,9 @@ public class Spiel {
 	private int kopfball(Spieler Angreifer){
 		double Schranke =0.01 * (Angreifer.getKopfball());
 
-		double rnd = Math.random();
+		double roll = Math.random();
 
-		if ( rnd <= Schranke) {			
+		if ( roll <= Schranke) {			
 
 			System.out.println("Der kommt gut");
 			return 3;
@@ -120,9 +215,9 @@ public class Spiel {
 	private int kopfballAufsTor(Spieler Torwart, Spieler Angreifer){
 		double Schranke =0.01 * ( 50 + Angreifer.getKopfball() - Torwart.getTorwart());
 
-		double rnd = Math.random();
+		double roll = Math.random();
 
-		if ( rnd <= Schranke) {
+		if ( roll <= Schranke) {
 			double latte = Math.random();
 			if (latte <= 0.02){
 				System.out.println(" An die Latte! Und der wird nochmal heiß");
@@ -172,9 +267,41 @@ public class Spiel {
 	// Methode, die alle offensiven Spieler eines Systems zurückgibt
 
 
-public Spiel() {
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public Spiel() {
+
+	}
 }
-}
-		
+
 
