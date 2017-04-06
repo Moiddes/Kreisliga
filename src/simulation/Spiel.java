@@ -27,20 +27,6 @@ public class Spiel {
 
 		p.println(Auswaertsteam.getTeamName());
 
-		// Position doch nicht als enum, wahrscheinlich mehr vorteile es als string zu speichern	
-		//		Position[] spielSystemHeim = new Position[]{Position.TW, LI, MD, MD, DM, DM, LM, RM, ZM, ST, ST}; 
-
-		System.out.println(Heimteam.getPlayerNames());
-		String player = Heimteam.getPlayerNames().get(0);
-		System.out.println(player);
-		System.out.println(Heimteam.getTeam().get(player).getAggresivitat());
-
-		Heimteam.addSpieler(new Spieler("Hans", "Sarpei"));
-		System.out.println(Heimteam.getPlayerNames());
-		System.out.println(Heimteam.getTeam().get("HansSarpei").getAggresivitat());
-		Heimteam.removeSpieler("HansSarpei");
-		System.out.println(Heimteam.getPlayerNames());
-		Heimteam.removeSpieler("HansSarpei");
 		ThisEvent =0; 
 		while (time <45) {
 

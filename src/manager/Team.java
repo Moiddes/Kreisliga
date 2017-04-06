@@ -9,10 +9,9 @@ import java.util.Random;
 
 public class Team {
 
-	private Map<String, Spieler> team = new HashMap<String, Spieler>();
-	private List<String> positions = new ArrayList<String>();  
+	private Map<String, Spieler> team = new HashMap<String, Spieler>();  
 	private String teamName;
-	private Taktik taktik;
+	private Taktik taktik = new Taktik();
 
 	public Team(String name) {
 		this.setTeamName(name);
@@ -27,12 +26,12 @@ public class Team {
 
 	public Team() {
 		this.setTeamName(this.TeamNameGenerator());
-		for(int k=0; k <= 15; k++){
+		this.taktik.setrandomFormation();
+		for(String position : this.taktik.getSpielertypen()){
 			String lastName = this.LastNameGenerator();
 			String firstName = this.FirstNameGenerator();
-			this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName));
+			this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName, position));			
 		}
-
 	}
 
 
@@ -58,7 +57,7 @@ public class Team {
 
 	private String TeamNameGenerator(){
 
-		String[] firstPart = { "SC", "FSV", "FC", "Real", "Atletico", "Türk SV",
+		String[] firstPart = { "SC", "FSV", "FC", "Real", "Atletico", "Türk SV", "Rasenball Sport",
 				"Sportfreunde", "TSG", "1. FC", "Eintracht", "VfL", "Borussia", "SV", "1. FSV", "Borussia" };
 
 		String[] lastPart = { "Hille", "Eckernförde", "Päppinghause", "Wattenscheid", "Bochum", "Herne",
@@ -83,21 +82,24 @@ public class Team {
 		this.teamName = teamName;
 
 	}
+	
+	public List<String> getplayerList(){
+		List<String> playerList = new ArrayList<String>(this.team.keySet());
+		return playerList;
+	}
 
 
 	public void addSpieler(Spieler spieler){
-		this.team.put(spieler.getFirstname() + spieler.getLastname(), spieler);	
+		this.team.put(spieler.getFirstname() + " " + spieler.getLastname(), spieler);	
 	}
 
-	public void removeSpieler(String firstNameLastName){
-		if(this.team.containsKey(firstNameLastName)){
-			this.playerNames.remove(firstNameLastName);
-			this.team.remove(firstNameLastName);
-		}
+	public void removeSpieler(String firstName, String lastName){
+		if(this.team.containsKey(firstName + " " + lastName)){
+			this.team.remove(firstName + " " + lastName);
+			}
 		else{
-			System.out.printf("Kein Spieler namens %s im Team", firstNameLastName);
+			//TODO throw exception
 		}
-
 	}
 	
 //	public Spieler getPlayerExcept(String... strings){
