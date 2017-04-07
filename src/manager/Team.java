@@ -1,6 +1,7 @@
 package manager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,26 +13,41 @@ public class Team {
 	private Map<String, Spieler> team = new HashMap<String, Spieler>();  
 	private String teamName;
 	private Taktik taktik = new Taktik();
+	private static int teamCount = 0;
 
 	public Team(String name) {
+		teamCount++;
 		this.setTeamName(name);
 		this.taktik.setrandomFormation();
-		for(String position : this.taktik.getSpielertypen()){
+		int i = 0;
+		while(i < this.taktik.getSpielertypen().size()){
+			String position = this.taktik.getSpielertypen().get(i);
 			String lastName = this.LastNameGenerator();
 			String firstName = this.FirstNameGenerator();
-			this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName, position));			
-		}
+			if(!this.team.containsKey(firstName + " " + lastName)){
+				this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName, position));
+				i++;
+			}
 
+		}
+		autoAufstellung();
 	}
 
 	public Team() {
+		teamCount++;
 		this.setTeamName(this.TeamNameGenerator());
 		this.taktik.setrandomFormation();
-		for(String position : this.taktik.getSpielertypen()){
+		int i = 0;
+		while(i < this.taktik.getSpielertypen().size()){
+			String position = this.taktik.getSpielertypen().get(i);
 			String lastName = this.LastNameGenerator();
 			String firstName = this.FirstNameGenerator();
-			this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName, position));			
+			if(!this.team.containsKey(firstName + " " + lastName)){
+				this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName, position));
+				i++;
+			}
 		}
+		autoAufstellung();
 	}
 
 
@@ -82,7 +98,7 @@ public class Team {
 		this.teamName = teamName;
 
 	}
-	
+
 	public List<String> getplayerList(){
 		List<String> playerList = new ArrayList<String>(this.team.keySet());
 		return playerList;
@@ -90,23 +106,60 @@ public class Team {
 
 
 	public void addSpieler(Spieler spieler){
-		this.team.put(spieler.getFirstname() + " " + spieler.getLastname(), spieler);	
+		this.team.put(spieler.getName(), spieler);	
 	}
 
 	public void removeSpieler(String firstName, String lastName){
 		if(this.team.containsKey(firstName + " " + lastName)){
 			this.team.remove(firstName + " " + lastName);
-			}
+		}
 		else{
 			//TODO throw exception
 		}
 	}
-	
-//	public Spieler getPlayerExcept(String... strings){
-//		return 
-//	}
-//	
+
+	public void autoAufstellung(){
+		int i = 0;
+		for(String position : this.taktik.getSpielertypen()){
+			i++;
+			if(i<=16){
+				float best = 0;
+				String bestSpieler = null;
+				for (Map.Entry<String, Spieler> entry : team.entrySet()) {
+					if(entry.getValue().getPositionValue(position) > best && entry.getValue().getPosition() == "RES"){
+						bestSpieler = entry.getKey();
+						best = entry.getValue().getPositionValue(position);
+					}    
+				}
+				if(i<=11){
+					team.get(bestSpieler).setPosition(position);
+				}
+				else if(i>11 && i<=16){
+					team.get(bestSpieler).setPosition("AUSW");
+				}
+			}
+		}
+	}
+
+	public Spieler getPlayerExcept(String... strings){
+		List<String> positions = new ArrayList<String>(Arrays.asList("TW", "LI", "IV", "MD", "LV", "RV", "DM", "LM", "ZM", "OM", "RM", "ST"));
+		for(int i = 0; i < strings.length; i++){
+			positions.remove(strings[i]);
+		}
+		List<Spieler> possiblePlayers = new ArrayList<Spieler>();
+		for(String position : positions){
+			for (Spieler value : team.values()) {
+				if(value.getPosition() == position && !value.isBusy()){
+					possiblePlayers.add(value);
+				}    
+			}
+		}
+		Random r = new Random();
+		return possiblePlayers.get(r.nextInt(possiblePlayers.size()));
+		
+	}
+
 //	public Spieler getPlayerFrom(String... strings){
-//		
+//
 //	}
 }

@@ -31,12 +31,26 @@ public class Spieler {
 	private String fuss; //mögliche Werte (links, rechts, beidfüßig)
 	//Team Werte
 	private String team;
-	private String position; //mögliche Werte (TW, LI, MD, IV, LV, RV, DM, LM, ZM, RM, OM, ST)
+	private String position; //mögliche Werte ("TW", "LI", "IV", "MD", "LV", "RV", "DM", "LM", "ZM", "OM", "RM", "ST")
 	private String favPosition;
 	private String firstname;
 	private String lastname;
 	//sim Werte	
 	private boolean busy;
+	
+	//interne Werte für Positionen
+	private float TW;
+	private float LI;
+	private float MD;
+	private float IV;
+	private float LV;
+	private float RV;
+	private float DM;
+	private float LM;
+	private float ZM;
+	private float RM;
+	private float OM;
+	private float ST;
 
 	static RandomInt r = new RandomInt();
 
@@ -53,7 +67,7 @@ public class Spieler {
 
 	}
 
-	public Spieler(String firstname, String lastname, String bestPosition) { //TODO constructoren für versch. Spieler schreiben
+	public Spieler(String firstname, String lastname, String bestPosition) {
 		this.setFirstname(firstname);
 		this.setLastname(lastname);
 		this.setPosition("RES");
@@ -311,7 +325,10 @@ public class Spieler {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-
+	
+	public String getName(){
+		return this.firstname + " " + this.lastname;
+	}
 	public String getPosition() {
 		return position;
 	}
@@ -322,7 +339,7 @@ public class Spieler {
 	public String getFavPosition() {
 		return favPosition;
 	}
-	public void setFavPosition(String favPosition) {
+	private void setFavPosition(String favPosition) {
 		this.favPosition = favPosition;
 	}
 
@@ -331,7 +348,54 @@ public class Spieler {
 	}
 	public void setBusy(boolean busy) {
 		this.busy = busy;
+	}	
+
+	public float getPositionValue(String string) {
+		float value = 0;
+		switch(string){
+		case("TW"):
+			value = this.TW;
+		break;
+		case "LI":
+			value = this.LI;
+			break;
+		case "MD":
+			value = this.MD;
+			break;
+		case "IV":
+			value = this.IV;
+			break;
+		case "LV": 
+			value = this.LV;
+			break;
+		case "RV":
+			value = this.RV;
+			break;
+		case "DM":
+			value = this.DM;
+			break;
+		case "LM": 
+			value = this.LM;
+			break;
+		case "RM":
+			value = this.RM;
+			break;
+		case "ZM":
+			value = this.ZM;
+			break;
+		case "OM":
+			value = this.OM;
+			break;
+		case "ST":
+			value = this.ST;
+			break;
+		default:
+			value = 0;
+			break;
+		}
+		return value;
 	}
+
 
 	private void setValues(int average, int deviation){
 		//metale Werte
@@ -353,7 +417,7 @@ public class Spieler {
 		this.setFlanken(r.randomIntegerGauss(average, deviation));
 		//defensive Werte
 		this.setAntizipation(r.randomIntegerGauss(average, deviation));
-		this.setTorwart(r.randomIntegerGauss(average - 10, deviation));
+		this.setTorwart(r.randomIntegerGauss(average - 15, deviation));
 	}
 
 	private void setNeutralValues(int average, int deviation){
@@ -374,19 +438,31 @@ public class Spieler {
 		this.setFlanken(r.randomIntegerGauss(average, deviation));
 	}
 
-
 	public void updateFavPosition(){
+		this.TW = (float)(this.torwart);
+		this.LI = (float)(this.stellungsspiel + this.antizipation + this.zweikampf)/3;
+		this.MD = (float)(this.stellungsspiel + this.geschwindigkeit + this.zweikampf)/3;
+		this.IV = (float)(this.stellungsspiel + this.antizipation + this.zweikampf + this.geschwindigkeit)/4;
+		this.LV = (float)(this.geschwindigkeit + this.zweikampf + this.pass)/3;
+		this.RV = (float)(this.geschwindigkeit + this.zweikampf + this.pass)/3;
+		this.DM = (float)(this.pass + this.zweikampf + this.ausdauer)/3;
+		this.LM = (float)(this.geschwindigkeit + this.flanken + this.pass)/3;
+		this.RM = (float)(this.geschwindigkeit + this.flanken + this.pass)/3;
+		this.ZM = (float)(this.pass + this.ausdauer + this.schuss)/3;
+		this.OM = (float)(this.pass + this.schuss + this.dribbling)/3;
+		this.ST = (float)(this.schuss + this.kopfball + this.dribbling)/3;
+		
 		Map<String, Float> positionValues = new HashMap<String, Float>();
-		positionValues.put("TW", (float)(this.torwart));
-		positionValues.put("LI", (float)(this.stellungsspiel + this.antizipation + this.zweikampf)/3);
-		positionValues.put("MD", (float)(this.stellungsspiel + this.geschwindigkeit + this.zweikampf)/3);
-		positionValues.put("IV", (float)(this.stellungsspiel + this.antizipation + this.zweikampf + this.geschwindigkeit)/4);
-		positionValues.put("LV/RV", (float)(this.geschwindigkeit + this.zweikampf + this.pass)/3);
-		positionValues.put("DM", (float)(this.pass + this.zweikampf + this.ausdauer)/3);
-		positionValues.put("LM/RM", (float)(this.geschwindigkeit + this.flanken + this.pass)/3);
-		positionValues.put("ZM", (float)(this.pass + this.ausdauer + this.schuss)/3);
-		positionValues.put("OM", (float)(this.pass + this.schuss + this.dribbling)/3);
-		positionValues.put("ST", (float)(this.schuss + this.kopfball + this.dribbling)/3);
+		positionValues.put("TW", this.getPositionValue("TW"));
+		positionValues.put("LI", this.getPositionValue("LI"));
+		positionValues.put("MD", this.getPositionValue("MD"));
+		positionValues.put("IV", this.getPositionValue("IV"));
+		positionValues.put("LV/RV", this.getPositionValue("LV"));
+		positionValues.put("DM", this.getPositionValue("DM"));
+		positionValues.put("LM/RM", this.getPositionValue("LM"));
+		positionValues.put("ZM", this.getPositionValue("ZM"));
+		positionValues.put("OM", this.getPositionValue("OM"));
+		positionValues.put("ST", this.getPositionValue("ST"));
 		float best = 0;
 		for (Map.Entry<String, Float> entry : positionValues.entrySet()) {
 			if(entry.getValue() > best){
