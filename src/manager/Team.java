@@ -155,11 +155,23 @@ public class Team {
 			}
 		}
 		Random r = new Random();
-		return possiblePlayers.get(r.nextInt(possiblePlayers.size()));
-		
+		return possiblePlayers.get(r.nextInt(possiblePlayers.size()));		
 	}
 
-//	public Spieler getPlayerFrom(String... strings){
-//
-//	}
+	public Spieler getPlayerFrom(String... strings){
+		List<String> positions = new ArrayList<String>();
+		for(int i = 0; i < strings.length; i++){
+			positions.add(strings[i]);
+		}
+		List<Spieler> possiblePlayers = new ArrayList<Spieler>();
+		for(String position : positions){
+			for (Spieler value : team.values()) {
+				if(value.getPosition() == position && !value.isBusy()){
+					possiblePlayers.add(value);
+				}    
+			}
+		}
+		Random r = new Random();
+		return possiblePlayers.get(r.nextInt(possiblePlayers.size()));	
+	}
 }

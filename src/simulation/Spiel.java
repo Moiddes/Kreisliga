@@ -26,6 +26,10 @@ public class Spiel {
 	public  void spielsimulation (Team Heimteam, Team Auswaertsteam) {
 
 		p.println(Auswaertsteam.getTeamName());
+		p.println(Heimteam.getTeamName());
+		
+		this.Heimteam = Heimteam;
+		this.Auswaertsteam = Auswaertsteam;
 
 		ThisEvent =0; 
 		while (time <45) {
@@ -100,7 +104,7 @@ public class Spiel {
 
 	private int pullEvent () {
 		if (time == 0) {
-			System.out.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen" + Heimteam.getTeamName() + "und" + Auswaertsteam.getTeamName());
+			System.out.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam.getTeamName() + " und " + Auswaertsteam.getTeamName());
 		}
 		System.out.println("Das Spiel dümpelt vor sich hin");
 		int a = r.randomIntegerbetween(0,100);
