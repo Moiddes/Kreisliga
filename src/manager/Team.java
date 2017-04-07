@@ -76,7 +76,7 @@ public class Team {
 		String[] firstPart = { "SC", "FSV", "FC", "Real", "Atletico", "Türk SV", "Rasenball Sport",
 				"Sportfreunde", "TSG", "1. FC", "Eintracht", "VfL", "Borussia", "SV", "1. FSV", "Borussia" };
 
-		String[] lastPart = { "Hille", "Eckernförde", "Päppinghause", "Wattenscheid", "Bochum", "Herne",
+		String[] lastPart = { "Hille", "Eckernförde", "Päppinghausen", "Wattenscheid", "Bochum", "Herne",
 				"Hartum", "Holzhausen II", "Südhemmern", "Nordhemmern", "Oberlübbe", "Unterlübbe", "Rothenuffeln", "Dützen", "Hahlen" };
 		Random r = new Random();
 

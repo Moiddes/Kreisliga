@@ -104,9 +104,9 @@ public class Spiel {
 
 	private int pullEvent () {
 		if (time == 0) {
-			System.out.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam.getTeamName() + " und " + Auswaertsteam.getTeamName());
+			p.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam.getTeamName() + " und " + Auswaertsteam.getTeamName());
 		}
-		System.out.println("Das Spiel dümpelt vor sich hin");
+		p.println("Das Spiel dümpelt vor sich hin");
 		int a = r.randomIntegerbetween(0,100);
 		if (a < 50) {
 			Angriff = Heimteam;
@@ -176,11 +176,11 @@ public class Spiel {
 
 		if ( roll <= Schranke) {
 
-			System.out.println("Er köpft...");
+			p.println("Er köpft...");
 			return 2;
 		}
 		else {
-			System.out.println("Der Verteidiger klärt...");
+			p.println("Der Verteidiger klärt...");
 			return 0;
 		}
 	}
@@ -193,12 +193,12 @@ public class Spiel {
 
 		if ( roll <= Schranke) {			
 
-			System.out.println("Der kommt gut");
+			p.println("Der kommt gut");
 			return 3;
 		}
 
 		else {
-			System.out.println("Der geht in die Karpaten.");
+			p.println("Der geht in die Karpaten.");
 			return 0;
 		}
 	}
@@ -210,28 +210,28 @@ public class Spiel {
 		if ( roll <= Schranke) {
 			double latte = Math.random();
 			if (latte <= 0.02){
-				System.out.println(" An die Latte! Und der wird nochmal heiß");
+				p.println(" An die Latte! Und der wird nochmal heiß");
 				return 4;
 			}
 			else {
 
-				System.out.println(" und passt perfekt! Tor!!!!!!");
+				p.println(" und passt perfekt! Tor!!!!!!");
 				return 2;
 			}
 		}
 		else {
-			System.out.println("Der Keeper fischt ihn raus.");
+			p.println("Der Keeper fischt ihn raus.");
 			double haelt = Math.random();
 			if (Torwart.getTorwart()/2 <= haelt){
-				System.out.println("Und hält die Murmel fest");
+				p.println("Und hält die Murmel fest");
 				return 0;
 			}
 			else if (Torwart.getTorwart() <= haelt) {
-				System.out.println("Und lässt zur Ecke klatschen");
+				p.println("Und lässt zur Ecke klatschen");
 				return 5;
 			}
 			else {
-				System.out.println("Und er klatscht nach vorne");
+				p.println("Und er klatscht nach vorne");
 				return 4;
 			}
 		}
@@ -243,11 +243,11 @@ public class Spiel {
 		double nachschuss= Math.random();
 		if (nachschuss <= 0.5){
 			//hier sollte noch ein offensiver Spieler der angreifenden Mannschaft gepullt werden
-			System.out.println("Direkt vor die Füße von ");
+			p.println("Direkt vor die Füße von ");
 			return 6;
 		}
 		else {
-			System.out.println("Aber ... kann klären");
+			p.println("Aber ... kann klären");
 			return 0;
 		}
 
