@@ -14,9 +14,9 @@ public class Kreisligamanager {
 	 */
 	public static void main(String[] args) {
 		
-		ManagerGUI gui = new ManagerGUI();
+//		ManagerGUI gui = new ManagerGUI();
 		
-		gui.startManagerGUI();
+		ManagerGUI.startManagerGUI();
 		
 //
 //		for(Spieler spieler : Heimteam.getTeam().values()){

@@ -23,7 +23,7 @@ public class ManagerGUI extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField SpieltagMessenger;
+	private static JTextField SpieltagMessenger;
 	public Team Heimteam = new Team();
 	public Team Auswaertsteam = new Team();
 	private Spiel spiel = new Spiel();
@@ -44,7 +44,7 @@ public class ManagerGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ManagerGUI() {
+	private ManagerGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
@@ -69,5 +69,10 @@ public class ManagerGUI extends JFrame {
 		SpieltagMessenger.setBounds(48, 134, 726, 65);
 		contentPane.add(SpieltagMessenger);
 		SpieltagMessenger.setColumns(10);
+	}
+	
+	public static void updateSimulationGUI(int time, String message){
+		String text = time + " Min    " + message;
+		SpieltagMessenger.setText(text);
 	}
 }

@@ -58,7 +58,7 @@ public class Spiel {
 					PassGegner = Verteidigung.getPlayerFrom("LM", "LV");
 
 				int Passqualitaet = Pass(PassSpieler);
-				if (Passqualitaet == 3) {
+ 				if (Passqualitaet == 3) {
 					p.println("Ein Wahnsinnspass " + PassGegner.getLastname() + " hat da keine Chance");
 					ThisEvent= 2;
 					break;
@@ -107,6 +107,7 @@ public class Spiel {
 	private int pullEvent () {
 		if (time == 0) {
 			p.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam.getTeamName() + " und " + Auswaertsteam.getTeamName());
+			ManagerGUI.updateSimulationGUI(time, "Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam.getTeamName() + " und " + Auswaertsteam.getTeamName());
 		}
 		else{
 			p.println("Das Spiel dümpelt vor sich hin");
