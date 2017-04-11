@@ -12,8 +12,9 @@ public class Team {
 
 	private Map<String, Spieler> team = new HashMap<String, Spieler>();  
 	private String teamName;
+//	private String teamArtikel; //TODO Artikel in Fällen definieren für die Ausgabe; evtl. über Geschlecht lösen
 	private Taktik taktik = new Taktik();
-	private static int teamCount = 0;
+	public static int teamCount = 0;
 
 	public Team(String name) {
 		teamCount++;
@@ -73,7 +74,7 @@ public class Team {
 
 	private String TeamNameGenerator(){
 
-		String[] firstPart = { "SC", "FSV", "FC", "Real", "Atletico", "Türk SV", "Rasenball Sport",
+		String[] firstPart = { "SC", "FSV", "FC", "Real", "Atletico", "Türk SV", "Rasenballsport", "SG",
 				"Sportfreunde", "TSG", "1. FC", "Eintracht", "VfL", "Borussia", "SV", "1. FSV", "Borussia" };
 
 		String[] lastPart = { "Hille", "Eckernförde", "Päppinghausen", "Wattenscheid", "Bochum", "Herne",
@@ -83,7 +84,15 @@ public class Team {
 		return firstPart[r.nextInt(firstPart.length)]
 				+ " "
 				+ lastPart[r.nextInt(lastPart.length)];
-	}	
+	}
+	
+//	private String TeamArtikel(){
+//		String artikel;
+//		String[] anfaenge = { "SC", "FSV", "FC", "Real", "Atletico", "Türk SV", "Rasenball Sport",
+//				"Sportfreunde", "TSG", "1. FC", "Eintracht", "VfL", "Borussia", "SV", "1. FSV", "Borussia" };
+//		for (String )
+//		return artikel;
+//	}
 
 
 	public Map<String, Spieler> getTeam() {

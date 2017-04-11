@@ -1,16 +1,13 @@
 package simulation;
-import java.util.List;
-import java.util.Random;
+
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import manager.*;
 import tools.*;
 
 public class Spiel {
 
-	public  int halbzeit = 1;
+	public int halbzeit = 1;
 	public int time = 0;
 	public int ThisEvent= 0;
 	public Team Heimteam;
@@ -23,17 +20,22 @@ public class Spiel {
 	private static PrintStream p = System.out;
 	static RandomInt r = new RandomInt();
 
-	public  void spielsimulation (Team Heimteam, Team Auswaertsteam) {
+	public void spielsimulation (Team Heimteam, Team Auswaertsteam) {
 
 		p.println(Auswaertsteam.getTeamName());
 		p.println(Heimteam.getTeamName());
-		
+
 		this.Heimteam = Heimteam;
 		this.Auswaertsteam = Auswaertsteam;
 
 		ThisEvent =0; 
 		while (time <45) {
-
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			switch  (ThisEvent){
 
@@ -46,9 +48,9 @@ public class Spiel {
 				//LANGER PASS AUF AUSSEN
 			case 1 :
 
-				 PassSpieler =  Angriff.getPlayerExcept("ST");
-				 PassEmpfaenger = Angriff.getPlayerFrom ("LM", "RM", "LV", "RV");
-				 PassGegner = null;
+				PassSpieler =  Angriff.getPlayerExcept("ST");
+				PassEmpfaenger = Angriff.getPlayerFrom ("LM", "RM", "LV", "RV");
+				PassGegner = null;
 				p.println(PassSpieler.getLastname() + " eröffnet mit einem Pass auf die Außenbahn");
 				if (PassEmpfaenger.getPosition() == "LM" || PassEmpfaenger.getPosition() == "LV")
 					PassGegner = Verteidigung.getPlayerFrom("RM", "RV");
@@ -78,20 +80,20 @@ public class Spiel {
 
 				// Spieler mit Ball auf außen
 			case 2 : 
-				
+
 				int Schranke = 50 + ( -50 + PassEmpfaenger.getSelbstbewusstsein());
 				int roll = r.randomIntegerbetween(0, 100);
 				if (roll <= Schranke) {
 					p.println("Der Junge zieht nach Innen!");
 					ThisEvent = NachInnenZiehen( PassEmpfaenger);
-					
+
 				}
 				else {
 					p.println("Er nimmt den Ball mit und begibt sich in Flankenposition");
 					ThisEvent = Flanke(PassEmpfaenger);
 				}
-					
-				
+
+
 			}	
 		}
 	}
@@ -106,7 +108,9 @@ public class Spiel {
 		if (time == 0) {
 			p.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam.getTeamName() + " und " + Auswaertsteam.getTeamName());
 		}
-		p.println("Das Spiel dümpelt vor sich hin");
+		else{
+			p.println("Das Spiel dümpelt vor sich hin");
+		}
 		int a = r.randomIntegerbetween(0,100);
 		if (a < 50) {
 			Angriff = Heimteam;
@@ -117,7 +121,7 @@ public class Spiel {
 			Verteidigung= Heimteam;
 		}
 
-		return r.randomIntegerbetween(0,10);
+		return r.randomIntegerbetween(0,1);
 
 
 	}
@@ -131,7 +135,7 @@ public class Spiel {
 			return 1+ roll / (Schranke/3);	
 		}
 		else return 0;
-				
+
 
 	}
 
@@ -151,8 +155,8 @@ public class Spiel {
 
 
 	}
-	
-	
+
+
 	private int NachInnenZiehen(Spieler Angreifer) {
 		return 0;
 	}
