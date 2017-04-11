@@ -329,6 +329,9 @@ public class Spieler {
 	public String getName(){
 		return this.firstname + " " + this.lastname;
 	}
+	public String getNamePosition(){
+		return this.firstname + " " + this.lastname + " (" + this.position + ")";
+	}
 	public String getPosition() {
 		return position;
 	}

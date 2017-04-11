@@ -19,6 +19,7 @@ public class Spiel {
 	private Spieler PassGegner;
 	private static PrintStream p = System.out;
 	static RandomInt r = new RandomInt();
+	private Text text = new Text();
 
 	public void spielsimulation (Team Heimteam, Team Auswaertsteam) {
 
@@ -51,7 +52,7 @@ public class Spiel {
 				PassSpieler =  Angriff.getPlayerExcept("ST");
 				PassEmpfaenger = Angriff.getPlayerFrom ("LM", "RM", "LV", "RV");
 				PassGegner = null;
-				p.println(PassSpieler.getLastname() + " eröffnet mit einem Pass auf die Außenbahn");
+				p.println(text.Aussenbahnpass(PassSpieler));
 				if (PassEmpfaenger.getPosition() == "LM" || PassEmpfaenger.getPosition() == "LV")
 					PassGegner = Verteidigung.getPlayerFrom("RM", "RV");
 				else 
@@ -106,8 +107,7 @@ public class Spiel {
 
 	private int pullEvent () {
 		if (time == 0) {
-			p.println("Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam.getTeamName() + " und " + Auswaertsteam.getTeamName());
-			ManagerGUI.updateSimulationGUI(time, "Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam.getTeamName() + " und " + Auswaertsteam.getTeamName());
+			p.println(text.Eroeffnung(Heimteam.getTeamName(), Auswaertsteam.getTeamName()));
 		}
 		else{
 			p.println("Das Spiel dümpelt vor sich hin");
