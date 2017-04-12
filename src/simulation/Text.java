@@ -14,18 +14,149 @@ public class Text {
 		this.sprache = sprache;
 	}
 	
-	public String Aussenbahnpass(Spieler spieler){
-		String[] string = {	spieler.getNamePosition() + " eröffnet mit einem Pass auf die Außenbahn",
-							spieler.getNamePosition() + " spielt den Ball auf Außen"};
+	public String Eroeffnung(String Heimteam, String Auswaertsteam){
+		String[] string = {	"Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam + " und " + Auswaertsteam,
+							"Guten Tag, meine Damen und Herren. Ich begrüße Sie zur Partie zwischen " + Heimteam + " und " + Auswaertsteam};
 		
 		Random r = new Random();
 
 		return string[r.nextInt(string.length)];
 	}
 	
-	public String Eroeffnung(String Heimteam, String Auswaertsteam){
-		String[] string = {	"Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam + " und " + Auswaertsteam,
-							"Guten Tag, meine Damen und Herren. Ich begrüße Sie zur Partie zwischen " + Heimteam + " und " + Auswaertsteam};
+	public String KeinEvent(){
+		String[] string = {	"Das Spiel dümpelt vor sich hin ",
+							"Hier passiert nichts. ",
+							"Kein Raumgewinn für eins der beiden Teams. ",
+							"Noch passiert nichts. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String Aussenbahnpass(Spieler angreifer){
+		String[] string = {	angreifer.getNamePosition() + " eröffnet mit einem Pass auf die Außenbahn",
+				angreifer.getNamePosition() + " spielt den Ball auf Außen"};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String PassSehrGut(){
+		String[] string = {	"Der Pass kommt genial! ",
+							"Ein Wahnsinnspass! ",
+							"Genialer Pass! ",
+							"Was ein Pass! "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String PassGut(){
+		String[] string = {	"Der Pass kommt ganz gut. ",
+							"Der Pass ist in Ordung. ",
+							"Das sieht gut aus. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String PassSchlecht(){
+		String[] string = {	"Das ist ein lausiger Pass! ",
+							"Der ist nicht gut... ",
+							"Leicht verzogen. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String PassVerfehlt(){
+		String[] string = {	"Wo wandert der denn hin? ",
+							"Der geht in die Karpaten. ",
+							"Vollkommen verzogen und ins Aus. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String GegnerKeineChance(Spieler verteidiger){
+		String[] string = {	verteidiger.getNamePosition() + " hat da keine Chance. ",
+							verteidiger.getNamePosition() + " sieht keine Schnitte. ",
+							verteidiger.getNamePosition() + " kommt da nicht ran. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String LaufduellPositiv(Spieler angreifer){
+		String[] string = {	angreifer.getNamePosition() + " nimmt den Klasse mit. ",
+							angreifer.getNamePosition() + " erläuft den Ball. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String LaufduellNegativ(Spieler verteidiger){
+		String[] string = {	verteidiger.getNamePosition() + " ist schneller und läuft den Ball ab. ",
+							verteidiger.getNamePosition() + " erläuft den Ball und der Angriff verpufft. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String NachInnenZiehen(){
+		String[] string = {	"Er überlegt kurz und zieht dann nach Innen. ",
+							"Er zieht in vollem Lauf nach Innen. ",
+							"Er knickt ab und läuft parallel zur Grundlinie. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String InFlankenposition(){
+		String[] string = {	"Er geht bis zur Grundlinie und bringt sich in Position zum Flanken. ",
+							"Er begibt sich in Flankenposition. ",
+							"Er setzt zur Flanke an. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String KopfballDuell(Spieler angreifer, Spieler verteidiger){
+		String[] string = {	angreifer.getNamePosition() + " und " + verteidiger.getNamePosition() + " steigen zum Kopfball hoch. ",
+							angreifer.getNamePosition() + " und " + verteidiger.getNamePosition() + " gehen zum Ball. ",};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String DuellPositiv(Spieler angreifer, Spieler verteidiger){
+		String[] string = {	angreifer.getLastname() + " entscheidet das Duell für sich. ",
+							angreifer.getLastname() + " ist eher am Ball. ",
+							angreifer.getLastname() + " lässt " + verteidiger.getLastname() + " alt aussehen. ",
+							"Der Verteidiger hat gegen " + angreifer.getLastname() + " keine Chance! "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String DuellNegativ(Spieler angreifer, Spieler verteidiger){
+		String[] string = {	verteidiger.getLastname() + " entscheidet das Duell für sich. ",
+							verteidiger.getLastname() + " ist eher am Ball. ",
+							verteidiger.getLastname() + " lässt " + angreifer.getLastname() + " alt aussehen. ",
+							"Der Angreifer hat gegen " + verteidiger.getLastname() + " keine Chance! "};
 		
 		Random r = new Random();
 

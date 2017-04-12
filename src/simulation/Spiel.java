@@ -60,22 +60,22 @@ public class Spiel {
 
 				int Passqualitaet = Pass(PassSpieler);
  				if (Passqualitaet == 3) {
-					p.println("Ein Wahnsinnspass " + PassGegner.getLastname() + " hat da keine Chance");
+					p.println(text.PassSehrGut() + text.GegnerKeineChance(PassGegner));
 					ThisEvent= 2;
 					break;
 				}
 				else if (Passqualitaet == 2) {
-					p.println("Der Pass kommt ganz gut");
+					p.println(text.PassGut());
 					ThisEvent = Laufduell(Passqualitaet, PassEmpfaenger, PassGegner);
 					break;
 				}
 				else if (Passqualitaet == 1 ){
-					p.println("Das ist ein lausiger Pass!");
+					p.println(text.PassSchlecht());
 					ThisEvent = Laufduell(Passqualitaet, PassEmpfaenger, PassGegner);
 					break;
 				}
 				else
-					p.println("Wo wandert der denn hin?");
+					p.println(text.PassVerfehlt());
 				ThisEvent = 0;
 				break;
 
@@ -85,12 +85,12 @@ public class Spiel {
 				int Schranke = 50 + ( -50 + PassEmpfaenger.getSelbstbewusstsein());
 				int roll = r.randomIntegerbetween(0, 100);
 				if (roll <= Schranke) {
-					p.println("Der Junge zieht nach Innen!");
+					p.println(text.NachInnenZiehen());
 					ThisEvent = NachInnenZiehen( PassEmpfaenger);
 
 				}
 				else {
-					p.println("Er nimmt den Ball mit und begibt sich in Flankenposition");
+					p.println(text.InFlankenposition());
 					ThisEvent = Flanke(PassEmpfaenger);
 				}
 
@@ -110,7 +110,7 @@ public class Spiel {
 			p.println(text.Eroeffnung(Heimteam.getTeamName(), Auswaertsteam.getTeamName()));
 		}
 		else{
-			p.println("Das Spiel dümpelt vor sich hin");
+			p.println(text.KeinEvent());
 		}
 		int a = r.randomIntegerbetween(0,100);
 		if (a < 50) {
@@ -129,7 +129,6 @@ public class Spiel {
 
 
 	private int Pass(Spieler PassSpieler) {
-		p.println(PassSpieler.getLastname() + " spielt den Pass");
 		int Schranke = PassSpieler.getPass();
 		int roll = r.randomIntegerbetween(0, 100);
 		if (roll <= Schranke) {
@@ -145,11 +144,11 @@ public class Spiel {
 		int roll =	r.randomIntegerbetween(0, 100);
 
 		if (roll <= Schranke) {
-			p.println(Empfaenger.getLastname() + " nimmt den Klasse mit");
+			p.println(text.LaufduellPositiv(Empfaenger) );
 			return 2;
 		}
 		else {
-			p.println(Gegner.getLastname() + " ist schneller am Ball und klärt");
+			p.println(text.LaufduellNegativ(Gegner));
 			return 0;
 
 		}
@@ -181,11 +180,11 @@ public class Spiel {
 
 		if ( roll <= Schranke) {
 
-			p.println("Er köpft...");
+			p.println(text.KopfballDuell(Angreifer, Verteidiger) + text.DuellPositiv(Angreifer, Verteidiger));
 			return 2;
 		}
 		else {
-			p.println("Der Verteidiger klärt...");
+			p.println(text.KopfballDuell(Angreifer, Verteidiger) + text.DuellNegativ(Angreifer, Verteidiger));
 			return 0;
 		}
 	}
