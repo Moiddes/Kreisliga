@@ -1,5 +1,6 @@
 package manager;
 
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +28,9 @@ public class Spieler {
 	private int pass;
 	private int dribbling;
 	private int flanken;
-	//feste Werte
+	//Eigenschaften
+	private GregorianCalendar geburtstag;
+	private int alter;
 	private String fuss; //mögliche Werte (links, rechts, beidfüßig)
 	//Team Werte
 	private String team;
@@ -60,6 +63,8 @@ public class Spieler {
 		this.setPosition("RES");
 		this.setBusy(false);
 		this.setRandomFuss();
+		this.setRandomGeburtstag();
+		this.updateAlter();
 
 		this.setValues(50, 20);
 
@@ -73,6 +78,8 @@ public class Spieler {
 		this.setPosition("RES");
 		this.setBusy(false);
 		this.setRandomFuss();
+		this.setRandomGeburtstag();
+		this.updateAlter();
 
 		switch(bestPosition){
 		case("TW"):
@@ -303,6 +310,56 @@ public class Spieler {
 		else{
 			this.setFuss("beidfüßig");
 		}
+	}
+	
+	public int getAlter() {
+		return alter;
+	}
+	
+	public void updateAlter(){
+       
+        GregorianCalendar today = new GregorianCalendar(); //TODO aktuelles Spiel Datum einfügen
+       
+        int year = today.get(GregorianCalendar.YEAR) - geburtstag.get(GregorianCalendar.YEAR);
+       
+        if(today.get(GregorianCalendar.MONTH) <= geburtstag.get(GregorianCalendar.MONTH))
+        {
+            if(today.get(GregorianCalendar.DATE) < geburtstag.get(GregorianCalendar.DATE))
+            {
+                year -= 1;
+            }
+        }
+       
+        if(year < 0)
+            throw new IllegalArgumentException("invalid age: "+year);
+       
+        this.alter = year;
+	}
+	
+	public GregorianCalendar getGeburtstag() {
+		return geburtstag;
+	}
+		
+	public void setGeburtstag(GregorianCalendar geburtstag) {
+		this.geburtstag = geburtstag;
+	}
+
+	private void setRandomGeburtstag(){ //TODO GregorianCalender nimmt für dezember 0 als Rückgabewert... evtl andere Klasse verwenden (JODA TIME)
+		int jahr = r.randomIntegerGaussbetween(1990, 6, 1970, 1999); //TODO muss vom aktuellen Datum im Spiel abhängen
+		int monat = r.randomIntegerbetween(12, 12);
+		int tag = 1;
+		switch(monat){
+		case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+			tag = r.randomIntegerbetween(1, 31);
+			break;
+		case 4: case 6: case 9: case 11:
+			tag = r.randomIntegerbetween(1, 30);
+			break;
+		case 2:
+			tag = r.randomIntegerbetween(1, 28);
+			break;
+		}
+		this.geburtstag = new GregorianCalendar(jahr,monat,tag);
 	}
 
 	public String getTeam() {

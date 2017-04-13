@@ -1,5 +1,6 @@
 package manager;
 import java.io.PrintStream;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 import simulation.*;
@@ -13,25 +14,35 @@ public class Kreisligamanager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
 		
-//		ManagerGUI gui = new ManagerGUI();
-		
-		ManagerGUI.startManagerGUI();
-		
-//
-//		for(Spieler spieler : Heimteam.getTeam().values()){
-//			p.printf("%s (%s)%n", spieler.getName(), spieler.getPosition());
-//		}
-//		p.println(" ");
-//		for(int i = 0; i<10; i++){
-//			Spieler spieler = Heimteam.getPlayerExcept("TW", "ST", "DM", "OM");
-//			p.printf("%s (%s)%n", spieler.getName(), spieler.getPosition());
-//		}
-//		p.println(" ");
-//		for(int i = 0; i<10; i++){
-//			Spieler spieler = Heimteam.getPlayerFrom("TW", "ST", "DM", "OM");
-//			p.printf("%s (%s)%n", spieler.getName(), spieler.getPosition());
-//		}
+
+//			RandomInt r = new RandomInt();
+//			p.println(r.randomIntegerbetween(1, 2));
+					
+			Team Heimteam = new Team("SC Hille");
+			p.println(Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.DATE) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.MONTH) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.YEAR));
+			p.println(Heimteam.getPlayerFrom("ST").getAlter());
+
+
+		//		ManagerGUI gui = new ManagerGUI();
+
+		//		ManagerGUI.startManagerGUI();
+
+		//
+		//		for(Spieler spieler : Heimteam.getTeam().values()){
+		//			p.printf("%s (%s)%n", spieler.getName(), spieler.getPosition());
+		//		}
+		//		p.println(" ");
+		//		for(int i = 0; i<10; i++){
+		//			Spieler spieler = Heimteam.getPlayerExcept("TW", "ST", "DM", "OM");
+		//			p.printf("%s (%s)%n", spieler.getName(), spieler.getPosition());
+		//		}
+		//		p.println(" ");
+		//		for(int i = 0; i<10; i++){
+		//			Spieler spieler = Heimteam.getPlayerFrom("TW", "ST", "DM", "OM");
+		//			p.printf("%s (%s)%n", spieler.getName(), spieler.getPosition());
+		//		}
 
 
 		//		int TW = 0; int LI= 0; int MD= 0; int IV= 0; int LV= 0; int DM= 0; int LM= 0; int ZM= 0; int OM= 0; int ST= 0;
@@ -69,8 +80,8 @@ public class Kreisligamanager {
 		//		p.printf("ST = %d%n",  ST);
 		//		p.printf("Anzahl = %d", playerCount);
 
-//		Spiel game1 = new Spiel();
-//		game1.spielsimulation(Heimteam, Auswaertsteam);
+		//		Spiel game1 = new Spiel();
+		//		game1.spielsimulation(Heimteam, Auswaertsteam);
 	}
 
 
