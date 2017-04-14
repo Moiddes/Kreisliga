@@ -26,8 +26,9 @@ public class Text {
 	public String KeinEvent(){
 		String[] string = {	"Das Spiel dümpelt vor sich hin ",
 							"Hier passiert nichts. ",
-							"Kein Raumgewinn für eins der beiden Teams. ",
-							"Noch passiert nichts. "};
+							"Kein Raumgewinn für die beiden Teams. ",
+							"Noch passiert nichts. ",
+							"Zur Zeit ist nicht viel los. "};
 		
 		Random r = new Random();
 
@@ -75,6 +76,47 @@ public class Text {
 	}
 	
 	public String PassVerfehlt(){
+		String[] string = {	"Wo wandert der denn hin? ",
+							"Der geht in die Karpaten. ",
+							"Vollkommen verzogen und ins Aus. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String FlankenSehrGut(){
+		String[] string = {	"Die Flanke kommt genial! ",
+							"Eine Wahnsinnsflanke! ",
+							"Geniale Flanke! ",
+							"Was eine Flanke! "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String FlankenGut(){
+		String[] string = {	"Die Flanke kommt ganz gut. ",
+							"Die Flanke ist in Ordung. ",
+							"Das sieht gut aus. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String FlankenSchlecht(){
+		String[] string = {	"Das ist eine lausige Flanke! ",
+							"Die ist nicht gut... ",
+							"Leicht verzogen. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String FlankenVerfehlt(){
 		String[] string = {	"Wo wandert der denn hin? ",
 							"Der geht in die Karpaten. ",
 							"Vollkommen verzogen und ins Aus. "};
@@ -157,6 +199,57 @@ public class Text {
 							verteidiger.getLastname() + " ist eher am Ball. ",
 							verteidiger.getLastname() + " lässt " + angreifer.getLastname() + " alt aussehen. ",
 							"Der Angreifer hat gegen " + verteidiger.getLastname() + " keine Chance! "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String BallDaneben(){
+		String[] string = {	"Der ist vollkommen verzogen. ",
+							"In die Karpaten. ",
+							"Meilenweit daneben. "};
+
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String TorwartHaelt(Spieler torwart){
+		String[] string = {	torwart.getNamePosition() + " fischt den Ball. ",
+							torwart.getNamePosition() + " ist schnell genug. ",
+							"Der Keeper fischt den Ball. ",
+							"Der Keeper ist schnell genug. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String TorwartHaeltFest(){
+		String[] string = {	"Und hält den Ball fest. ",
+							"Und hat ihn sicher. ",
+							"Und begräbt ihn unter sich. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String TorwartZurEcke(){
+		String[] string = {	"Und lässt ihn zur Ecke klatschen. ",
+							"Und lenkt ihn ins Toraus. ",
+							"Und befördert ihn ins Toraus. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String TorwartAbpraller(){
+		String[] string = {	"Und lässt ihn nach vorne klatschen. ",
+							"Und lenkt ihn nach vorne ab. ",
+							"Und faustet ihn nach vorne. "};
 		
 		Random r = new Random();
 

@@ -6,7 +6,7 @@ public class RandomInt {
 	
 	public int randomInteger(){
 		Random r = new Random();
-		int low = 1;
+		int low = 0;
 		int high = 100;
 		int result = r.nextInt(high+1-low) + low;
 		return result;

@@ -14,15 +14,20 @@ public class Kreisligamanager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		Spiel test = new Spiel();
+		test.spielsimulation(new Team("SC Hille"), new Team());
+//		test.getAuswaertsteamTore();
+				
 
 		
 
 //			RandomInt r = new RandomInt();
 //			p.println(r.randomIntegerbetween(1, 2));
 					
-			Team Heimteam = new Team("SC Hille");
-			p.println(Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.DATE) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.MONTH) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.YEAR));
-			p.println(Heimteam.getPlayerFrom("ST").getAlter());
+//			Team Heimteam = new Team("SC Hille");
+//			p.println(Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.DATE) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.MONTH) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.YEAR));
+//			p.println(Heimteam.getPlayerFrom("ST").getAlter());
 
 
 		//		ManagerGUI gui = new ManagerGUI();
