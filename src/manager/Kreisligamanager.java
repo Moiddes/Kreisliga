@@ -14,20 +14,34 @@ public class Kreisligamanager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+//		Spiel test = new Spiel();
+		int Heimtore = 0;
+		int Auswaertstore = 0;
+//		test.spielsimulation(Heimteam, Auswaertsteam);
+//		Auswaertstore += test.getAuswaertsteamTore();
+//		Heimtore += test.getHeimteamTore();
+//		test.spielsimulation(Heimteam, Auswaertsteam);
+//		Auswaertstore += test.getAuswaertsteamTore();
+//		Heimtore += test.getHeimteamTore();
 		
-		Spiel test = new Spiel();
-		test.spielsimulation(new Team("SC Hille"), new Team());
-//		test.getAuswaertsteamTore();
-				
+		for (int i = 0; i < 1000; i++){
+			Spiel test = new Spiel();
+			Team Heimteam = new Team("SC Hille");
+			Team Auswaertsteam = new Team();
+			test.spielsimulation(Heimteam, Auswaertsteam);
+			Auswaertstore += test.getAuswaertsteamTore();
+			Heimtore += test.getHeimteamTore();
+		}
+		p.println("GESAMT: " + Heimtore + " : " + Auswaertstore);
 
-		
 
-//			RandomInt r = new RandomInt();
-//			p.println(r.randomIntegerbetween(1, 2));
-					
-//			Team Heimteam = new Team("SC Hille");
-//			p.println(Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.DATE) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.MONTH) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.YEAR));
-//			p.println(Heimteam.getPlayerFrom("ST").getAlter());
+
+
+		//			RandomInt r = new RandomInt();
+		//			p.println(r.randomIntegerbetween(1, 2));
+
+		//			p.println(Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.DATE) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.MONTH) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.YEAR));
+		//			p.println(Heimteam.getPlayerFrom("ST").getAlter());
 
 
 		//		ManagerGUI gui = new ManagerGUI();

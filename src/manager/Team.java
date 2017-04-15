@@ -183,4 +183,16 @@ public class Team {
 		Random r = new Random();
 		return possiblePlayers.get(r.nextInt(possiblePlayers.size()));	
 	}
+	
+	public float getTeamInitiative(){
+		float morale = 0;
+		float strength = 0;
+		for (Spieler value : team.values()) {
+			if(value.getPosition() != "AUSW" && value.getPosition() != "RES"){
+				morale += value.getMoral();
+				strength += value.getPositionValue(value.getPosition());
+			}
+		}
+		return morale + strength; //TODO evtl die beiden Dinge noch gewichten
+	}	
 }
