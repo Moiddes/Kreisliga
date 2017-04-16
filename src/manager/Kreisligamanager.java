@@ -24,7 +24,7 @@ public class Kreisligamanager {
 //		Auswaertstore += test.getAuswaertsteamTore();
 //		Heimtore += test.getHeimteamTore();
 		
-		for (int i = 0; i < 1000; i++){
+		for (int i = 0; i < 1; i++){
 			Spiel test = new Spiel();
 			Team Heimteam = new Team("SC Hille");
 			Team Auswaertsteam = new Team();

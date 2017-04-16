@@ -15,6 +15,8 @@ public class Spiel {
 	public Team Angriff;
 	public Team Verteidigung;
 	
+	private int endtime = 90;
+	
 	private Spieler SpielerMitBall;
 	private Spieler SpielerMitBallVorher;
 	private Spieler GegnerVorher;
@@ -39,22 +41,21 @@ public class Spiel {
 		this.Auswaertsteam = Auswaertsteam;
 
 		ThisEvent =0; 
-		while (time <= 90) {
+		while (time <= endtime) {
 			try {
-				Thread.sleep(0);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (time == 45){
+			if (time == 45 && ThisEvent == 0){
 				p.println("ZWEITE HALBZEIT");
-				ThisEvent = 0;
 			}
 			switch  (ThisEvent){
 		
 			case 0 : // PULLEVENT
-				ThisEvent = pullEvent();
 				time += 1;
+				ThisEvent = pullEvent();
 				break;
 
 			case 1 : //LANGER PASS AUF AUSSEN 
@@ -131,22 +132,25 @@ public class Spiel {
 		if (time == 0) {
 			p.println(text.Minute(time) + text.Eroeffnung(Heimteam.getTeamName(), Auswaertsteam.getTeamName()));
 		}
-		else{
-			p.println(text.Minute(time) + text.KeinEvent());
-		}
-		int nextEvent = r.randomIntegerbetween(0, 1);
-		if(nextEvent != 0){
-			int Schranke = (int) (100 * (Heimteam.getTeamInitiative()/(Heimteam.getTeamInitiative() + Auswaertsteam.getTeamInitiative())));
-			int roll = r.randomInteger();
-			if (roll < Schranke) {
-				Angriff = Heimteam;
-				Verteidigung= Auswaertsteam;
+		int nextEvent = 0;
+		if(time <= endtime){
+			nextEvent = r.randomIntegerbetween(0, 1);
+			if(nextEvent != 0){
+				int Schranke = (int) (100 * (Heimteam.getTeamInitiative()/(Heimteam.getTeamInitiative() + Auswaertsteam.getTeamInitiative())));
+				int roll = r.randomInteger();
+				if (roll < Schranke) {
+					Angriff = Heimteam;
+					Verteidigung= Auswaertsteam;
+				}
+				else {
+					Angriff = Auswaertsteam;
+					Verteidigung= Heimteam;
+				}
+				p.println(text.Minute(time) + Angriff.getTeamName() + " im Angriff");
 			}
-			else {
-				Angriff = Auswaertsteam;
-				Verteidigung= Heimteam;
+			else{
+				p.println(text.Minute(time) + text.KeinEvent());
 			}
-			p.println(text.Minute(time) + Angriff.getTeamName() + " im Angriff");
 		}
 		return nextEvent;
 	}
@@ -155,7 +159,7 @@ public class Spiel {
 	private int AussenbahnPass(){
 		Spieler PassSpieler =  Angriff.getPlayerExcept("ST");
 		PassSpieler.setBusy(true);
-		p.println(text.Minute(time) + text.Aussenbahnpass(PassSpieler));
+		p.println(text.Aussenbahnpass(PassSpieler));
 		Passqualitaet = PassQualitaet(PassSpieler);
 
 		if (Passqualitaet == 100.0) {
@@ -190,11 +194,11 @@ public class Spiel {
 		else{
 			ZweikampfGegner = Verteidigung.getPlayerFrom("LV", "DM", "IV");
 		}
-		p.println(text.Minute(time) + SpielerMitBall.getNamePosition() + " hat den Ball auf Außen. ");
+		p.println(text.SpielerAufAussen(SpielerMitBall));
 		int Schranke = ZweikampfGegner.getStellungsspiel();
 		int roll = r.randomInteger();
 		if (roll <= Schranke) {
-			p.println(text.Minute(time) + "Er wird von " + ZweikampfGegner.getNamePosition() + " gestellt.");
+			p.println("Er wird von " + ZweikampfGegner.getNamePosition() + " gestellt.");
 			if (Dribbling(SpielerMitBall, ZweikampfGegner)){
 				if (GegnerVorher != null){
 					GegnerVorher.setBusy(false);
@@ -211,7 +215,7 @@ public class Spiel {
 			else return 0;
 		}
 		else {
-			p.println(text.Minute(time) + "Es ist niemand da um ihn zu stellen. ");
+			p.println("Es ist niemand da um ihn zu stellen. ");
 			//zieht nach innen oder flanke 
 			Schranke = SpielerMitBall.getSelbstbewusstsein();
 			roll = r.randomInteger();
@@ -229,22 +233,22 @@ public class Spiel {
 		double nachschuss= Math.random();
 		if (nachschuss <= 0.5){
 			//hier sollte noch ein offensiver Spieler der angreifenden Mannschaft gepullt werden
-			p.println(text.Minute(time) + "Direkt vor die Füße von ");
+			p.println("Direkt vor die Füße von ");
 			return 16; //Fernschuss Sechzehner
 		}
 		else {
-			p.println(text.Minute(time) + "Aber ... kann klären");
+			p.println("Aber ... kann klären");
 			return 0;
 		}
 	}
 	
 	//case 13
 	private int NachInnenZiehen() {
-		p.println(text.Minute(time) + "Er zieht nach Innen ");
+		p.println("Er zieht nach Innen ");
 		int Schranke = SpielerMitBall.getSelbstbewusstsein();
 		int roll = r.randomInteger();
 		if (roll == 100){
-			p.println(text.Minute(time) + "und verstolpet den Ball... ");
+			p.println("und verstolpet den Ball... ");
 			return 0;
 		}
 		else if (roll <= Schranke) {
@@ -255,7 +259,7 @@ public class Spiel {
 	
 	//case 14
 	private int Flanken(){
-		p.println(text.Minute(time) + SpielerMitBall.getNamePosition() + " setzt zur Flanke an.");
+		p.println(SpielerMitBall.getNamePosition() + " setzt zur Flanke an.");
 		Flankenqualitaet = FlankenQualitaet(SpielerMitBall);
 		
 		if (Flankenqualitaet == 100.0) {
@@ -289,7 +293,7 @@ public class Spiel {
 		int roll =	r.randomInteger();
 
 		if (roll <= Schranke) {
-			p.println(text.Minute(time) + text.LaufduellPositiv(PassEmpfaenger));
+			p.println(text.LaufduellPositiv(PassEmpfaenger));
 			if (GegnerVorher != null){
 				GegnerVorher.setBusy(false);
 			}
@@ -298,7 +302,7 @@ public class Spiel {
 			return 11; //AufAussen
 		}
 		else {
-			p.println(text.Minute(time) + text.LaufduellNegativ(PassGegner));
+			p.println(text.LaufduellNegativ(PassGegner));
 			return 0; //pullEvent
 
 		}
@@ -306,11 +310,11 @@ public class Spiel {
 	
 	//case 16
 	private int Schuss(int Abstand){
-		p.println(text.Minute(time) + SpielerMitBall.getNamePosition() + " setzt aus " + Abstand + " Metern zum Schuss an");
+		p.println(SpielerMitBall.getNamePosition() + " setzt aus " + Abstand + " Metern zum Schuss an");
 		int Schranke = SpielerMitBall.getSchuss();
 		int roll = r.randomInteger();
 		if (roll <= Schranke){
-			p.println(text.Minute(time) + "Der geht Richtung Tor. ");
+			p.println("Der geht Richtung Tor. ");
 			if (!Block()){
 				Spieler torwart = Verteidigung.getPlayerFrom("TW");
 				Schranke = v.RationX(SpielerMitBall.getSchuss(), torwart.getTorwart()) - (Abstand - 10);
@@ -321,7 +325,7 @@ public class Spiel {
 			}
 		}
 		else{
-			p.println(text.Minute(time) + text.BallDaneben());
+			p.println(text.BallDaneben());
 			return 0;
 		}
 		
@@ -333,13 +337,13 @@ public class Spiel {
 		int roll = r.randomInteger();
 
 		if ( roll <= Schranke) {			
-			p.println(text.Minute(time) + "Der kommt gut ");
+			p.println("Der kommt gut ");
 			Spieler torwart = Verteidigung.getPlayerFrom("TW");
 			Schranke = v.RationX(SpielerMitBall.getKopfball(), torwart.getTorwart());
 			return BallAufsTor(Schranke);
 		}
 		else {
-			p.println(text.Minute(time) + "Meilenweit daneben. ");
+			p.println("Meilenweit daneben. ");
 			return 0;
 		}
 	}
@@ -352,7 +356,7 @@ public class Spiel {
 		int roll = r.randomInteger();
 
 		if ( roll <= Schranke) {
-			p.println(text.Minute(time) + text.KopfballDuell(angreifer, verteidiger) + text.DuellPositiv(angreifer, verteidiger));
+			p.println(text.KopfballDuell(angreifer, verteidiger) + text.DuellPositiv(angreifer, verteidiger));
 			if (SpielerMitBallVorher != null){
 				SpielerMitBallVorher.setBusy(false);
 			}
@@ -361,14 +365,19 @@ public class Spiel {
 			return 18; //Kopfball
 		}
 		else {
-			p.println(text.Minute(time) + text.KopfballDuell(angreifer, verteidiger) + text.DuellNegativ(angreifer, verteidiger));
+			p.println(text.KopfballDuell(angreifer, verteidiger) + text.DuellNegativ(angreifer, verteidiger));
 			return 0;
 		}
 	}
 	
+	//case 20
+//	private int Ecke(){
+//		
+//	}
+	
 	//Case 100
 	private int Tor(){
-		p.println(text.Minute(time) + "Was für eine Bude für " + Angriff.getTeamName());
+		p.println("Was für eine Bude für " + Angriff.getTeamName());
 		if (Angriff == Heimteam){
 			HeimteamTore += 1;
 		}
@@ -382,19 +391,19 @@ public class Spiel {
 		int Schranke = spieler.getPass();
 		int roll = r.randomInteger();
 		if (roll <= Schranke/3) {
-			p.println(text.Minute(time) + text.PassSehrGut());
+			p.println(text.PassSehrGut());
 			return 100.0;	
 		}
 		else if(roll <= 2*Schranke/3 && roll > Schranke/3){
-			p.println(text.Minute(time) + text.PassGut());
+			p.println(text.PassGut());
 			return 10.0;
 		}
 		else if(roll <= Schranke && roll > 2*Schranke/3){
-			p.println(text.Minute(time) + text.PassSchlecht());
+			p.println(text.PassSchlecht());
 			return -10.0;
 		}
 		else{
-			p.println(text.Minute(time) + text.PassVerfehlt());
+			p.println(text.PassVerfehlt());
 			return -100.0;
 		}
 	}
@@ -403,19 +412,19 @@ public class Spiel {
 		int Schranke = spieler.getFlanken();
 		int roll = r.randomInteger();
 		if (roll <= Schranke/3) {
-			p.println(text.Minute(time) + text.FlankenSehrGut());
+			p.println(text.FlankenSehrGut());
 			return 100.0;	
 		}
 		else if(roll <= 2*Schranke/3 && roll > Schranke/3){
-			p.println(text.Minute(time) + text.FlankenGut());
+			p.println(text.FlankenGut());
 			return 10.0;
 		}
 		else if(roll <= Schranke && roll > Schranke/3){
-			p.println(text.Minute(time) + text.FlankenSchlecht());
+			p.println(text.FlankenSchlecht());
 			return -10.0;
 		}
 		else{
-			p.println(text.Minute(time) + text.FlankenVerfehlt());
+			p.println(text.FlankenVerfehlt());
 			return -100;
 		}
 	}
@@ -425,7 +434,7 @@ public class Spiel {
 		int schranke = 50 + angreifer.getDribbling() - verteidiger.getZweikampf();
 		int roll = r.randomInteger();
 		if (roll <= schranke){
-			p.println(text.Minute(time) + "und lässt " + verteidiger.getNamePosition() + " stehen. ");
+			p.println("und lässt " + verteidiger.getNamePosition() + " stehen. ");
 			if (GegnerVorher != null){
 				GegnerVorher.setBusy(false);
 			}
@@ -433,7 +442,7 @@ public class Spiel {
 			return true;
 		}
 		else{
-			p.println(text.Minute(time) + "aber scheitert an " + verteidiger.getNamePosition());
+			p.println("aber scheitert an " + verteidiger.getNamePosition());
 			return false;
 		}
 	}
@@ -443,28 +452,28 @@ public class Spiel {
 		int Schranke = 50 + SpielerMitBall.getSchuss() - block.getStellungsspiel();
 		int roll = r.randomInteger();
 		if (roll <= Schranke){
-			p.println(text.Minute(time) + "Durch alle hindurch. ");
+			p.println("Durch alle hindurch. ");
 			return false;
 		}
 		else{
-			p.println(text.Minute(time) + "Und wird geblockt. ");
+			p.println("Und wird geblockt. ");
 			return true;
 		}
 	}
 	
 	private int torwartHaelt(Spieler torwart){
-		p.println(text.Minute(time) + text.TorwartHaelt(torwart));
+		p.println(text.TorwartHaelt(torwart));
 		int haelt = r.randomInteger();
 		if (torwart.getTorwart()/2 <= haelt){
-			p.println(text.Minute(time) + text.TorwartHaeltFest());
+			p.println(text.TorwartHaeltFest());
 			return 0;
 		}
 		else if (torwart.getTorwart() <= haelt) {
-			p.println(text.Minute(time) + text.TorwartZurEcke());
+			p.println(text.TorwartZurEcke());
 			return 20; //Ecke
 		}
 		else {
-			p.println(text.Minute(time) + text.TorwartAbpraller());
+			p.println(text.TorwartAbpraller());
 			return 10; //Abpraller
 		}
 	}
@@ -476,11 +485,11 @@ public class Spiel {
 		if ( roll <= Schranke) {
 			int latte = r.randomInteger();
 			if (latte <= 1){
-				p.println(text.Minute(time) + "An die Latte! Und der wird nochmal heiß");
+				p.println("An die Latte! Und der wird nochmal heiß");
 				return 10; //Abpraller
 			}
 			else {
-				p.println(text.Minute(time) + "Und passt perfekt! TOR!!!!!!");
+				p.println("Und passt perfekt! TOR!!!!!!");
 				return 100; //Tor verarbeiten je nach Ergebniss etc.
 			}
 		}

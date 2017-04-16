@@ -16,6 +16,9 @@ public class Taktik {
 	private static final String[] reserve2 = {"ZM", "ZM"};
 	private List<String> Spielertypen;
 	private String formation;
+	
+	private Spieler spielerEckelinks;
+	private Spieler spielerEckerechts;
 	static RandomInt r = new RandomInt();
 	
 	public String getFormation() {
@@ -66,6 +69,21 @@ public class Taktik {
 			break;
 		}
 	}
+	
+	
+	public Spieler getSpielerEckelinks() {
+		return spielerEckelinks;
+	}
+	public void setSpielerEckelinks(Spieler spielerEckelinks) {
+		this.spielerEckelinks = spielerEckelinks;
+	}
+	public Spieler getSpielerEckerechts() {
+		return spielerEckerechts;
+	}
+	public void setSpielerEckerechts(Spieler spielerEckerechts) {
+		this.spielerEckerechts = spielerEckerechts;
+	}
+	
 	//TODO evtl auslagern
 	public String[] concat(String[] a, String[] b) {
 		   int aLen = a.length;

@@ -14,6 +14,14 @@ public class Text {
 		this.sprache = sprache;
 	}
 	
+	private String frei(){
+		return "         - ";
+	}
+	
+	public String Minute(int time){
+		return (time + ":00 Min - ");
+	}
+	
 	public String Eroeffnung(String Heimteam, String Auswaertsteam){
 		String[] string = {	"Herzlich Wilkommen, meine Damen und Herren zu der Partie zwischen " + Heimteam + " und " + Auswaertsteam,
 							"Guten Tag, meine Damen und Herren. Ich begr¸ﬂe Sie zur Partie zwischen " + Heimteam + " und " + Auswaertsteam};
@@ -33,10 +41,6 @@ public class Text {
 		Random r = new Random();
 
 		return string[r.nextInt(string.length)];
-	}
-	
-	public String Minute(int time){
-		return (time + " :00 Min - ");
 	}
 	
 	public String Aussenbahnpass(Spieler angreifer){
@@ -141,7 +145,7 @@ public class Text {
 	}
 	
 	public String LaufduellPositiv(Spieler angreifer){
-		String[] string = {	angreifer.getNamePosition() + " nimmt den Klasse mit. ",
+		String[] string = {	angreifer.getNamePosition() + " nimmt den klasse mit. ",
 							angreifer.getNamePosition() + " erl‰uft den Ball. "};
 		
 		Random r = new Random();
@@ -260,4 +264,13 @@ public class Text {
 		return string[r.nextInt(string.length)];
 	}
 	
+	public String SpielerAufAussen(Spieler angreifer){
+		String[] string = {	angreifer.getNamePosition() + " ist auﬂen am Strafraum. ",
+							angreifer.getNamePosition() + " geht Richtung Grundlinie. ",
+							angreifer.getNamePosition() + " hat den Ball auf Auﬂen. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
 }
