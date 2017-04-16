@@ -15,7 +15,24 @@ public class Team {
 //	private String teamArtikel; //TODO Artikel in Fällen definieren für die Ausgabe; evtl. über Geschlecht lösen
 	private Taktik taktik = new Taktik();
 	public static int teamCount = 0;
-
+	
+	public Team() {
+		teamCount++;
+		this.setTeamName(this.TeamNameGenerator());
+		this.taktik.setrandomFormation();
+		int i = 0;
+		while(i < this.taktik.getSpielertypen().size()){
+			String position = this.taktik.getSpielertypen().get(i);
+			String lastName = this.LastNameGenerator();
+			String firstName = this.FirstNameGenerator();
+			if(!this.team.containsKey(firstName + " " + lastName)){
+				this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName, position));
+				i++;
+			}
+		}
+		autoAufstellung();
+	}
+	
 	public Team(String name) {
 		teamCount++;
 		this.setTeamName(name);
@@ -33,24 +50,6 @@ public class Team {
 		}
 		autoAufstellung();
 	}
-
-	public Team() {
-		teamCount++;
-		this.setTeamName(this.TeamNameGenerator());
-		this.taktik.setrandomFormation();
-		int i = 0;
-		while(i < this.taktik.getSpielertypen().size()){
-			String position = this.taktik.getSpielertypen().get(i);
-			String lastName = this.LastNameGenerator();
-			String firstName = this.FirstNameGenerator();
-			if(!this.team.containsKey(firstName + " " + lastName)){
-				this.team.put(firstName + " " + lastName, new Spieler(firstName, lastName, position));
-				i++;
-			}
-		}
-		autoAufstellung();
-	}
-
 
 	private String FirstNameGenerator(){
 

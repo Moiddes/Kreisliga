@@ -35,6 +35,10 @@ public class Text {
 		return string[r.nextInt(string.length)];
 	}
 	
+	public String Minute(int time){
+		return (time + " :00 Min - ");
+	}
+	
 	public String Aussenbahnpass(Spieler angreifer){
 		String[] string = {	angreifer.getNamePosition() + " eröffnet mit einem Pass auf die Außenbahn",
 				angreifer.getNamePosition() + " spielt den Ball auf Außen"};
