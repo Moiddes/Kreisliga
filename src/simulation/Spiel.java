@@ -78,7 +78,8 @@ public class Spiel {
 				ThisEvent = SpielerAufAussen();
 				break;
 			case 12: //Abpraller
-				
+				ThisEvent = Abpraller();
+				break;
 			case 13: //Spieler zieht nach innen
 				ThisEvent = NachInnenZiehen();
 				break;
@@ -228,16 +229,20 @@ public class Spiel {
 	
 	//case 12
 	private int Abpraller() {
-		// Soll den Wert der Verteidigenden und der Angreifenden Spieler vergleichen, um darauf zu rollen, ob die Verteidiger klären, oder 
-		// died Angreifer einen Nachschuss bekommen. Vorerst 50/50
-		double nachschuss= Math.random();
-		if (nachschuss <= 0.5){
-			//hier sollte noch ein offensiver Spieler der angreifenden Mannschaft gepullt werden
-			p.println("Direkt vor die Füße von ");
+		int Schranke = (int) (100 * (Angriff.getTeamAbprallerOff()/(Angriff.getTeamAbprallerOff() + Verteidigung.getTeamAbprallerDef())));
+		int nachschuss= r.randomInteger();
+		if (nachschuss <= Schranke){
+			if (SpielerMitBallVorher != null){
+				SpielerMitBallVorher.setBusy(false);
+			}
+			SpielerMitBall.setBusy(false);
+			SpielerMitBall = Angriff.getPlayerFrom("LM", "RM", "DM", "OM", "ZM", "ST");
+			p.println("Direkt vor die Füße von " + SpielerMitBall.getNamePosition());
 			return 16; //Fernschuss Sechzehner
 		}
 		else {
-			p.println("Aber ... kann klären");
+			Spieler verteidiger = Verteidigung.getPlayerFrom("LI", "LM", "DM", "RM", "IV", "RV", "LV", "MD");
+			p.println("Aber " + verteidiger.getNamePosition() + " kann klären");
 			return 0;
 		}
 	}
@@ -310,7 +315,7 @@ public class Spiel {
 	
 	//case 16
 	private int Schuss(int Abstand){
-		p.println(SpielerMitBall.getNamePosition() + " setzt aus " + Abstand + " Metern zum Schuss an");
+		p.println("Er setzt aus " + Abstand + " Metern zum Schuss an");
 		int Schranke = SpielerMitBall.getSchuss();
 		int roll = r.randomInteger();
 		if (roll <= Schranke){
@@ -474,7 +479,7 @@ public class Spiel {
 		}
 		else {
 			p.println(text.TorwartAbpraller());
-			return 10; //Abpraller
+			return 12; //Abpraller
 		}
 	}
 	

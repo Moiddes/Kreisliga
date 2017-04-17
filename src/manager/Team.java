@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import tools.Vergleich;
+
 
 public class Team {
 
@@ -15,6 +17,7 @@ public class Team {
 //	private String teamArtikel; //TODO Artikel in Fällen definieren für die Ausgabe; evtl. über Geschlecht lösen
 	private Taktik taktik = new Taktik();
 	public static int teamCount = 0;
+	private static Vergleich v = new Vergleich();
 	
 	public Team() {
 		teamCount++;
@@ -193,5 +196,29 @@ public class Team {
 			}
 		}
 		return morale + strength; //TODO evtl die beiden Dinge noch gewichten
-	}	
+	}
+	
+	public float getTeamAbprallerOff(){
+		float morale = 0;
+		float strength = 0;
+		for (Spieler value : team.values()) {
+			if(v.StringEquals(value.getPosition(), "DM", "LM", "OM", "RM", "ZM", "ST")){
+				morale += value.getMoral();
+				strength += value.getStellungsspiel() + value.getGeschwindigkeit();
+			}
+		}
+		return morale + strength; //TODO evtl die beiden Dinge noch gewichten
+	}
+	
+	public float getTeamAbprallerDef(){
+		float morale = 0;
+		float strength = 0;
+		for (Spieler value : team.values()) {
+			if(v.StringEquals(value.getPosition(), "LI", "LM", "DM", "RM", "IV", "RV", "LV", "MD")){
+				morale += value.getMoral();
+				strength += value.getStellungsspiel() + value.getGeschwindigkeit();
+			}
+		}
+		return morale + strength; //TODO evtl die beiden Dinge noch gewichten
+	}
 }
