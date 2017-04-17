@@ -116,6 +116,12 @@ public class Spiel {
 		p.println("ENDERGEBNIS: " + HeimteamTore + " : " + AuswaertsteamTore);
 	}
 
+	//TODO 	vllt Ballbesitz nur bei bestimmten Aktionen wechseln (Ball ins Aus, Torwart haelt, etc.)
+	//		dann könnte eine Mannschaft auch auf Ballbesitz spielen. Is dann ein Event, dessen Wahrscheinlichkeit
+	//		sich über die Taktik bestimmen lässt.
+	//		Außerdem ein Event dummer Ballverlust, dass mit kleiner Moral öfter auftaucht.
+	// 		Ballbesitz durch Pressing, wenn die Verteidiger beim Ball halten einen roll auf passen verkacken
+	
 	//case 0
 	private int pullEvent () {
 		// alle Spieler wieder für Aktionen freigeben
@@ -147,7 +153,7 @@ public class Spiel {
 					Angriff = Auswaertsteam;
 					Verteidigung= Heimteam;
 				}
-				p.println(text.Minute(time) + Angriff.getTeamName() + " im Angriff");
+				p.println(text.Minute(time) + text.imBallbesitzt(Angriff.getTeamName()));
 			}
 			else{
 				p.println(text.Minute(time) + text.KeinEvent());

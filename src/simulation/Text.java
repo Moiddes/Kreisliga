@@ -43,6 +43,18 @@ public class Text {
 		return string[r.nextInt(string.length)];
 	}
 	
+	public String imBallbesitzt(String team){
+		String[] string = {	team + " im Ballbesitz. ",
+							team + " hat den Ball. ",
+							"Ballbesitz für " + team,
+							"Der Ball ist in den Reihen von " + team,
+							team + " hat den Ball in  "};
+
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
 	public String Aussenbahnpass(Spieler angreifer){
 		String[] string = {	angreifer.getNamePosition() + " eröffnet mit einem Pass auf die Außenbahn",
 				angreifer.getNamePosition() + " spielt den Ball auf Außen"};
