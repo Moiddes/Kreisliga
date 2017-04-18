@@ -146,6 +146,47 @@ public class Text {
 		return string[r.nextInt(string.length)];
 	}
 	
+	public String EckeSehrGut(){
+		String[] string = {	"Die Ecke kommt genial! ",
+							"Eine Wahnsinnsecke! ",
+							"Geniale Ecke! ",
+							"Was eine Ecke! "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String EckeGut(){
+		String[] string = {	"Die Ecke kommt ganz gut. ",
+							"Die Ecke ist in Ordung. ",
+							"Das sieht gut aus. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String EckeSchlecht(){
+		String[] string = {	"Das ist eine lausige Ecke! ",
+							"Die ist nicht gut... ",
+							"Leicht verzogen. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
+	public String EckeVerfehlt(){
+		String[] string = {	"Wo wandert der denn hin? ",
+							"Der geht in die Karpaten. ",
+							"Vollkommen verzogen und ins Toraus. "};
+		
+		Random r = new Random();
+
+		return string[r.nextInt(string.length)];
+	}
+	
 	public String GegnerKeineChance(Spieler verteidiger){
 		String[] string = {	verteidiger.getNamePosition() + " hat da keine Chance. ",
 							verteidiger.getNamePosition() + " sieht keine Schnitte. ",

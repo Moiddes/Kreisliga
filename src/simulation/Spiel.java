@@ -43,7 +43,7 @@ public class Spiel {
 		ThisEvent =0; 
 		while (time <= endtime) {
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(0);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -71,7 +71,7 @@ public class Spiel {
 			
 			case 6: //Balleroberung durch Pressing
 				
-			case 7: //
+			case 7: //Ball halten
 
 				
 			case 11 : // Spieler mit Ball auf außen
@@ -100,6 +100,11 @@ public class Spiel {
 				ThisEvent = kopfballduell();
 				break;
 			case 20: //Ecke
+				ThisEvent = Ecke();
+				break;
+				
+			case 21: //Ball von außen in den Strafraum; Kopfball, Ball rutscht durch zusammenfassen
+					 //für Ecke und Flanke
 				
 			case 70: //Abseits, ab hier aufsteigend die "Schiri Events"
 			case 80: //Konter - Event, dass den Angriff umkehrt
@@ -124,24 +129,15 @@ public class Spiel {
 	
 	//case 0
 	private int pullEvent () {
-		// alle Spieler wieder für Aktionen freigeben
-		for (Spieler spieler : Heimteam.getTeam().values()){
-			spieler.setBusy(false);
-		}
-		for (Spieler spieler : Auswaertsteam.getTeam().values()){
-			spieler.setBusy(false);
-		}
-		// alle Zuweisungen wieder aufheben
-		SpielerMitBall = null;
-		SpielerMitBallVorher = null;
-		GegnerVorher = null;
+		//Zuweisungen und Busy wieder auf null
+		cancelBusy();
 		
 		if (time == 0) {
 			p.println(text.Minute(time) + text.Eroeffnung(Heimteam.getTeamName(), Auswaertsteam.getTeamName()));
 		}
 		int nextEvent = 0;
 		if(time <= endtime){
-			nextEvent = r.randomIntegerbetween(0, 1);
+			nextEvent = r.randomIntegerbetween(0, 10);
 			if(nextEvent != 0){
 				int Schranke = (int) (100 * (Heimteam.getTeamInitiative()/(Heimteam.getTeamInitiative() + Auswaertsteam.getTeamInitiative())));
 				int roll = r.randomInteger();
@@ -154,9 +150,11 @@ public class Spiel {
 					Verteidigung= Heimteam;
 				}
 				p.println(text.Minute(time) + text.imBallbesitzt(Angriff.getTeamName()));
+				nextEvent = 1;
 			}
 			else{
 				p.println(text.Minute(time) + text.KeinEvent());
+				nextEvent = 0;
 			}
 		}
 		return nextEvent;
@@ -164,7 +162,7 @@ public class Spiel {
 
 	//case 1
 	private int AussenbahnPass(){
-		Spieler PassSpieler =  Angriff.getPlayerExcept("ST");
+		Spieler PassSpieler =  Angriff.getPlayerExcept("ST", "TW");
 		PassSpieler.setBusy(true);
 		p.println(text.Aussenbahnpass(PassSpieler));
 		Passqualitaet = PassQualitaet(PassSpieler);
@@ -382,9 +380,35 @@ public class Spiel {
 	}
 	
 	//case 20
-//	private int Ecke(){
-//		
-//	}
+	private int Ecke(){
+		cancelBusy();
+		Spieler Eckengeber = null;
+		int roll = r.randomInteger();
+		if (roll <= 50){
+			Eckengeber = Angriff.taktik.getSpielerEckelinks();
+			p.println(Eckengeber.getNamePosition() + " steht links zur Ecke bereit. ");
+		}
+		else{
+			Eckengeber = Angriff.taktik.getSpielerEckerechts();
+			p.println(Eckengeber.getNamePosition() + " steht rechts zur Ecke bereit. ");
+		}
+		Flankenqualitaet = EckenQualitaet(Eckengeber);
+		
+		if (Flankenqualitaet == 100.0) {
+			if (SpielerMitBallVorher != null){
+				SpielerMitBallVorher.setBusy(false);
+			}
+			SpielerMitBallVorher = SpielerMitBall;
+			SpielerMitBall = Angriff.getPlayerFrom("OM", "ZM", "ST");
+			return 18; //Kopfball
+		}
+		else if (Flankenqualitaet == 10.0 || Flankenqualitaet == -10.0) {
+			return 19; //Kopfballduell
+		}
+		else{
+			return 0;
+		}
+	}
 	
 	//Case 100
 	private int Tor(){
@@ -430,12 +454,33 @@ public class Spiel {
 			p.println(text.FlankenGut());
 			return 10.0;
 		}
-		else if(roll <= Schranke && roll > Schranke/3){
+		else if(roll <= Schranke && roll > 2*Schranke/3){
 			p.println(text.FlankenSchlecht());
 			return -10.0;
 		}
 		else{
 			p.println(text.FlankenVerfehlt());
+			return -100;
+		}
+	}
+	
+	private double EckenQualitaet(Spieler spieler) {
+		int Schranke = 20 + (spieler.getFlanken() + spieler.getAntizipation())/2;
+		int roll = r.randomInteger();
+		if (roll <= Schranke/6) {
+			p.println(text.EckeSehrGut());
+			return 100.0;	
+		}
+		else if(roll <= 5*Schranke/6 && roll > Schranke/6){
+			p.println(text.EckeGut());
+			return 10.0;
+		}
+		else if(roll <= Schranke && roll > 5*Schranke/6){
+			p.println(text.EckeSchlecht());
+			return -10.0;
+		}
+		else{
+			p.println(text.EckeVerfehlt());
 			return -100;
 		}
 	}
@@ -475,11 +520,11 @@ public class Spiel {
 	private int torwartHaelt(Spieler torwart){
 		p.println(text.TorwartHaelt(torwart));
 		int haelt = r.randomInteger();
-		if (torwart.getTorwart()/2 <= haelt){
+		if (haelt <= torwart.getTorwart()/2){
 			p.println(text.TorwartHaeltFest());
 			return 0;
 		}
-		else if (torwart.getTorwart() <= haelt) {
+		else if (haelt <= torwart.getTorwart()) {
 			p.println(text.TorwartZurEcke());
 			return 20; //Ecke
 		}
@@ -507,6 +552,20 @@ public class Spiel {
 		else {
 			return torwartHaelt(torwart);
 		}
+	}
+	
+	private void cancelBusy(){
+		// alle Spieler wieder für Aktionen freigeben
+		for (Spieler spieler : Heimteam.getTeam().values()){
+			spieler.setBusy(false);
+		}
+		for (Spieler spieler : Auswaertsteam.getTeam().values()){
+			spieler.setBusy(false);
+		}
+		// alle Zuweisungen wieder aufheben
+		SpielerMitBall = null;
+		SpielerMitBallVorher = null;
+		GegnerVorher = null;
 	}
 
 	public Spiel() {

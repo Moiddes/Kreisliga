@@ -15,7 +15,7 @@ public class Team {
 	private Map<String, Spieler> team = new HashMap<String, Spieler>();  
 	private String teamName;
 //	private String teamArtikel; //TODO Artikel in Fällen definieren für die Ausgabe; evtl. über Geschlecht lösen
-	private Taktik taktik = new Taktik();
+	public Taktik taktik = new Taktik();
 	public static int teamCount = 0;
 	private static Vergleich v = new Vergleich();
 	
@@ -33,7 +33,8 @@ public class Team {
 				i++;
 			}
 		}
-		autoAufstellung();
+		this.autoTaktik();
+		this.autoAufstellung();
 	}
 	
 	public Team(String name) {
@@ -51,7 +52,8 @@ public class Team {
 			}
 
 		}
-		autoAufstellung();
+		this.autoTaktik();
+		this.autoAufstellung();
 	}
 
 	private String FirstNameGenerator(){
@@ -77,10 +79,12 @@ public class Team {
 	private String TeamNameGenerator(){
 
 		String[] firstPart = { "SC", "FSV", "FC", "Real", "Atletico", "Türk SV", "Rasenballsport", "SG",
-				"Sportfreunde", "TSG", "1. FC", "Eintracht", "VfL", "Borussia", "SV", "1. FSV", "Borussia" };
+				"Sportfreunde", "TSG", "1. FC", "Eintracht", "VfL", "Borussia", "SV", "1. FSV", "Borussia",
+				"Dynamo", "Energie"};
 
-		String[] lastPart = { "Hille", "Eckernförde", "Päppinghausen", "Wattenscheid", "Bochum", "Herne",
-				"Hartum", "Holzhausen II", "Südhemmern", "Nordhemmern", "Oberlübbe", "Unterlübbe", "Rothenuffeln", "Dützen", "Hahlen" };
+		String[] lastPart = { "Hille", "Eckernförde", "Päppinghausen", "Wattenscheid", "Bochum", "Herne", 
+				"Salzwedel", "Schnega", "Hartum", "Holzhausen II", "Südhemmern", "Nordhemmern", "Oberlübbe",
+				"Unterlübbe", "Rothenuffeln", "Dützen", "Hahlen" };
 		Random r = new Random();
 
 		return firstPart[r.nextInt(firstPart.length)]
@@ -148,6 +152,16 @@ public class Team {
 				else if(i>11 && i<=16){
 					team.get(bestSpieler).setPosition("AUSW");
 				}
+			}
+		}
+	}
+	
+	public void autoTaktik(){
+		int flankenBest = 0;
+		for (Spieler value : team.values()) {
+			if(value.getFlanken() > flankenBest){
+				this.taktik.setSpielerEckelinks(value);
+				this.taktik.setSpielerEckerechts(value);
 			}
 		}
 	}
