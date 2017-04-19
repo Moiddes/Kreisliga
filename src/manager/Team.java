@@ -10,7 +10,7 @@ import java.util.Random;
 import tools.Vergleich;
 
 
-public class Team {
+public class Team implements java.io.Serializable {
 
 	private Map<String, Spieler> team = new HashMap<String, Spieler>();  
 	private String teamName;
@@ -256,4 +256,32 @@ public class Team {
 		}
 		return morale + strength; //TODO evtl die beiden Dinge noch gewichten
 	}
+
+
+
+
+
+public Spieler getPlayer(){
+	Spieler Testboii = null;
+	List<String> positions = new ArrayList<String>(Arrays.asList("TW", "LI", "IV", "MD", "LV", "RV", "DM", "LM", "ZM", "OM", "RM", "ST"));
+	List<Spieler> possiblePlayers = new ArrayList<Spieler>();
+	for(String position : positions){
+		System.out.println("Test Position: " + position);
+		for (Spieler value : team.values()) {
+			if(value.getPosition() == position && !value.isBusy()){
+				possiblePlayers.add(value);
+				System.out.println("Hooray");
+				Testboii = value;
+			}    
+		}
+	}
+	//Random r = new Random();
+	//return possiblePlayers.get(r.nextInt(possiblePlayers.size()));		
+	return Testboii;
 }
+
+}
+
+
+
+

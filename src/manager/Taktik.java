@@ -5,7 +5,7 @@ import java.util.List;
 
 import tools.RandomInt;
 
-public class Taktik {
+public class Taktik implements java.io.Serializable {
 	private static final String[] spielertypen1 = {"TW", "LI", "MD", "MD", "DM", "DM", "LM", "ZM", "RM", "ST", "ST"};
 	private static final String[] spielertypen2 = {"TW", "LV", "IV", "IV", "RV", "LM", "ZM", "ZM", "RM", "ST", "ST"};
 	private static final String[] spielertypen3 = {"TW", "LV", "IV", "IV", "RV", "DM", "LM", "ZM", "RM", "ST", "ST"};

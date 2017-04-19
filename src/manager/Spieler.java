@@ -6,7 +6,7 @@ import java.util.Map;
 
 import tools.*;
 
-public class Spieler {
+public class Spieler implements java.io.Serializable {
 
 	//neutrale Werte
 	private int geschwindigkeit;

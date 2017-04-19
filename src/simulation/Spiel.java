@@ -188,7 +188,7 @@ public class Spiel {
 			if (SpielerMitBallVorher != null){
 				SpielerMitBallVorher.setBusy(false);
 			}
-			SpielerMitBallVorher = SpielerMitBall;
+			SpielerMitBallVorher = PassSpieler;
 			SpielerMitBallVorher.setBusy(true);
 			SpielerMitBall = Angriff.getPlayerFrom("LM", "LV", "RM", "RV");
 			return 15; //Laufduell auf Aussen
@@ -430,7 +430,7 @@ public class Spiel {
 			if (SpielerMitBallVorher != null){
 				SpielerMitBallVorher.setBusy(false);
 			}
-			SpielerMitBallVorher = SpielerMitBall;
+			SpielerMitBallVorher = Eckengeber;
 			SpielerMitBallVorher.setBusy(true);
 			SpielerMitBall = Angriff.getPlayerFrom("OM", "ZM", "ST");
 			return 18; //Kopfball

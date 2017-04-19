@@ -1,4 +1,10 @@
 package manager;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.util.GregorianCalendar;
 import java.util.Map;
@@ -14,93 +20,121 @@ public class Kreisligamanager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		Spiel test = new Spiel();
+		Spiel test = new Spiel();
 		int Heimtore = 0;
 		int Auswaertstore = 0;
-//		test.spielsimulation(Heimteam, Auswaertsteam);
-//		Auswaertstore += test.getAuswaertsteamTore();
-//		Heimtore += test.getHeimteamTore();
-//		test.spielsimulation(Heimteam, Auswaertsteam);
-//		Auswaertstore += test.getAuswaertsteamTore();
-//		Heimtore += test.getHeimteamTore();
+
 		
-		for (int i = 0; i < 10; i++){
-			Spiel test = new Spiel();
-			Team Heimteam = new Team("SC Hille");
-			Team Auswaertsteam = new Team();
-			test.spielsimulation(Heimteam, Auswaertsteam);
-			Auswaertstore += test.getAuswaertsteamTore();
-			Heimtore += test.getHeimteamTore();
+//		for (int i = 0; i < 10; i++){
+//			Spiel test = new Spiel();
+//			Team Heimteam = new Team("SC Hille");
+//			Team Auswaertsteam = new Team();
+//			test.spielsimulation(Heimteam, Auswaertsteam);
+//			Auswaertstore += test.getAuswaertsteamTore();
+//			Heimtore += test.getHeimteamTore();
+//		}
+//		p.println("GESAMT: " + Heimtore + " : " + Auswaertstore);
+		
+		Team Heimteam = new Team();
+		Team Auswaertsteam = new Team();
+		
+		File f = new File("C:\\Kreisliga\\Heim.ser");
+		if(f.exists() && !f.isDirectory()) { 
+			try {
+		         FileInputStream fileIn = new FileInputStream("C:\\Kreisliga\\Heim.ser");
+		         ObjectInputStream in = new ObjectInputStream(fileIn);
+		         Heimteam = (Team) in.readObject();
+		         in.close();
+		         fileIn.close();
+		         p.println("Heimteam geladen");
+		      }catch(IOException i) {
+		         i.printStackTrace();
+		         return;
+		      }catch(ClassNotFoundException c) {
+		         System.out.println("Team class not found");
+		         c.printStackTrace();
+		         return;
+		      }
 		}
-		p.println("GESAMT: " + Heimtore + " : " + Auswaertstore);
+		else {
+			Heimteam = new Team("SC Hille");
+			p.println("Heimteam erstellt");
+		}
+		
+		File f2 = new File("C:\\Kreisliga\\Weg.ser");
+		if(f2.exists() && !f2.isDirectory()) { 
+			try {
+		         FileInputStream fileIn = new FileInputStream("C:\\Kreisliga\\Weg.ser");
+		         ObjectInputStream in = new ObjectInputStream(fileIn);
+		         Auswaertsteam = (Team) in.readObject();
+		         in.close();
+		         fileIn.close();
+		         p.println("Auswaertsteam geladen");
+		      }catch(IOException i) {
+		         i.printStackTrace();
+		         return;
+		      }catch(ClassNotFoundException c) {
+		         System.out.println("Team class not found");
+		         c.printStackTrace();
+		         return;
+		      }
+		}
+		else {
+			Auswaertsteam = new Team();
+			p.println("Auswaertsteam erstellt");
+		}
+		
+
+Spieler TestBoy = Heimteam.getPlayer();
+
+p.println(TestBoy.getName());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//	test.spielsimulation(Heimteam, Auswaertsteam);
+	//	Auswaertstore += test.getAuswaertsteamTore();
+	//	 Heimtore += test.getHeimteamTore();		
+		
+		
+	      try {
+	          FileOutputStream fileOut =
+	          new FileOutputStream("C:\\Kreisliga\\Heim.ser");
+	          ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	          out.writeObject(Heimteam);
+	          out.close();
+	          fileOut.close();
+	          p.println("Serialized data is saved in C\\Kreisliga\\Heim.ser");
+	       }catch(IOException i) {
+	          i.printStackTrace();
+	       }
 
 
+	      try {
+	          FileOutputStream fileOut =
+	          new FileOutputStream("C:\\Kreisliga\\Weg.ser");
+	          ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	          out.writeObject(Auswaertsteam);
+	          out.close();
+	          fileOut.close();
+	          p.println("Serialized data is saved in C\\Kreisliga\\Weg.ser");
+	       }catch(IOException i) {
+	          i.printStackTrace();
+	       }
 
+	      
+	      
+	      
+	      
+	      
 
-		//			RandomInt r = new RandomInt();
-		//			p.println(r.randomIntegerbetween(1, 2));
-
-		//			p.println(Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.DATE) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.MONTH) + "." +  Heimteam.getPlayerFrom("ST").getGeburtstag().get(GregorianCalendar.YEAR));
-		//			p.println(Heimteam.getPlayerFrom("ST").getAlter());
-
-
-		//		ManagerGUI gui = new ManagerGUI();
-
-		//		ManagerGUI.startManagerGUI();
-
-		//
-		//		for(Spieler spieler : Heimteam.getTeam().values()){
-		//			p.printf("%s (%s)%n", spieler.getName(), spieler.getPosition());
-		//		}
-		//		p.println(" ");
-		//		for(int i = 0; i<10; i++){
-		//			Spieler spieler = Heimteam.getPlayerExcept("TW", "ST", "DM", "OM");
-		//			p.printf("%s (%s)%n", spieler.getName(), spieler.getPosition());
-		//		}
-		//		p.println(" ");
-		//		for(int i = 0; i<10; i++){
-		//			Spieler spieler = Heimteam.getPlayerFrom("TW", "ST", "DM", "OM");
-		//			p.printf("%s (%s)%n", spieler.getName(), spieler.getPosition());
-		//		}
-
-
-		//		int TW = 0; int LI= 0; int MD= 0; int IV= 0; int LV= 0; int DM= 0; int LM= 0; int ZM= 0; int OM= 0; int ST= 0;
-		//		int playerCount = 0;
-		//		
-		//		for(int i=0; i<1000; i++){
-		//			Heimteam = new Team();
-		//			for (Map.Entry<String, Spieler> entry : Heimteam.getTeam().entrySet()){
-		//				String position = entry.getValue().getFavPosition();
-		//				playerCount +=1;
-		//				
-		//				switch(position){
-		//				case "TW": TW +=1; break;
-		//				case "LI": LI +=1; break;
-		//				case "MD": MD +=1; break;
-		//				case "IV": IV +=1; break;
-		//				case "LV/RV": LV +=1; break;
-		//				case "DM": DM +=1; break;
-		//				case "LM/RM": LM +=1; break;
-		//				case "ZM": ZM +=1; break;
-		//				case "OM": OM +=1; break;
-		//				case "ST": ST +=1; break;
-		//				}
-		//			}
-		//		}
-		//		p.printf("TW = %d%n",  TW);
-		//		p.printf("LI = %d%n",  LI);
-		//		p.printf("MD = %d%n",  MD);
-		//		p.printf("IV = %d%n",  IV);
-		//		p.printf("LV = %d%n",  LV);
-		//		p.printf("DM = %d%n",  DM);
-		//		p.printf("LM = %d%n",  LM);
-		//		p.printf("ZM = %d%n",  ZM);
-		//		p.printf("OM = %d%n",  OM);
-		//		p.printf("ST = %d%n",  ST);
-		//		p.printf("Anzahl = %d", playerCount);
-
-		//		Spiel game1 = new Spiel();
-		//		game1.spielsimulation(Heimteam, Auswaertsteam);
 	}
 
 

@@ -68,7 +68,7 @@ public class ManagerGUI extends JFrame {
 		SpieltagMessenger.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		SpieltagMessenger.setBounds(48, 134, 726, 65);
 		contentPane.add(SpieltagMessenger);
-		SpieltagMessenger.setColumns(10);
+		SpieltagMessenger.setColumns(50);
 	}
 	
 	public static void updateSimulationGUI(int time, String message){
