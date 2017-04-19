@@ -89,10 +89,12 @@ public class Spiel {
 			case 15: //Laufduell auf Auﬂen
 				ThisEvent = LaufduellaufAussen();
 				break;
-			case 16: //Fernschuss Sechzehner
-				ThisEvent = Schuss(16);
+			case 16: //Fernschuss Sechzehner auﬂen
+				ThisEvent = Schuss(20);
 				break;
 			case 17: //Quer legen
+				ThisEvent = querLegen();
+				break;
 			case 18: //Kopfball aufs Tor
 				ThisEvent = kopfball();
 				break;
@@ -102,8 +104,13 @@ public class Spiel {
 			case 20: //Ecke
 				ThisEvent = Ecke();
 				break;
+			case 21: //Spieler mit Ball zentral am Sechzehner
 				
-			case 21: //Ball von auﬂen in den Strafraum; Kopfball, Ball rutscht durch zusammenfassen
+			case 22: //Fernschuss Sechzehner zentral
+				ThisEvent = Schuss(16);
+				break;
+				
+			case 25: //Ball von auﬂen in den Strafraum; Kopfball, Ball rutscht durch zusammenfassen
 					 //f¸r Ecke und Flanke
 				
 			case 70: //Abseits, ab hier aufsteigend die "Schiri Events"
@@ -172,6 +179,7 @@ public class Spiel {
 				SpielerMitBallVorher.setBusy(false);
 			}
 			SpielerMitBallVorher = PassSpieler;
+			SpielerMitBallVorher.setBusy(true);
 			SpielerMitBall = Angriff.getPlayerFrom("LM", "LV", "RM", "RV");
 			return 11; //Spieler auf Auﬂen 
 		}
@@ -180,6 +188,7 @@ public class Spiel {
 				SpielerMitBallVorher.setBusy(false);
 			}
 			SpielerMitBallVorher = SpielerMitBall;
+			SpielerMitBallVorher.setBusy(true);
 			SpielerMitBall = Angriff.getPlayerFrom("LM", "LV", "RM", "RV");
 			return 15; //Laufduell auf Aussen
 		}
@@ -242,7 +251,7 @@ public class Spiel {
 			SpielerMitBall.setBusy(false);
 			SpielerMitBall = Angriff.getPlayerFrom("LM", "RM", "DM", "OM", "ZM", "ST");
 			p.println("Direkt vor die F¸ﬂe von " + SpielerMitBall.getNamePosition());
-			return 16; //Fernschuss Sechzehner
+			return 22; //Schuss vom Sechzehner zentral
 		}
 		else {
 			Spieler verteidiger = Verteidigung.getPlayerFrom("LI", "LM", "DM", "RM", "IV", "RV", "LV", "MD");
@@ -261,7 +270,7 @@ public class Spiel {
 			return 0;
 		}
 		else if (roll <= Schranke) {
-			return 16; //Fernschuss
+			return 16; //Schuss vom Sechszehner auﬂen
 		}
 		else return 17; //Quer legen
 	}
@@ -298,7 +307,7 @@ public class Spiel {
 			PassGegner = Verteidigung.getPlayerFrom("LV", "LM");
 		}
 		PassGegner.setBusy(true);
-		int Schranke = (int) (Passqualitaet) + v.RationX(PassEmpfaenger.getGeschwindigkeit() + PassEmpfaenger.getStellungsspiel(), PassGegner.getGeschwindigkeit() + PassGegner.getStellungsspiel());
+		int Schranke = (int) (Passqualitaet) + v.RatioX(PassEmpfaenger.getGeschwindigkeit() + PassEmpfaenger.getStellungsspiel(), PassGegner.getGeschwindigkeit() + PassGegner.getStellungsspiel());
 		int roll =	r.randomInteger();
 
 		if (roll <= Schranke) {
@@ -317,7 +326,7 @@ public class Spiel {
 		}
 	}
 	
-	//case 16
+	//case 16 [20m Abstand] 
 	private int Schuss(int Abstand){
 		p.println("Er setzt aus " + Abstand + " Metern zum Schuss an");
 		int Schranke = SpielerMitBall.getSchuss();
@@ -326,7 +335,7 @@ public class Spiel {
 			p.println("Der geht Richtung Tor. ");
 			if (!Block()){
 				Spieler torwart = Verteidigung.getPlayerFrom("TW");
-				Schranke = v.RationX(SpielerMitBall.getSchuss(), torwart.getTorwart()) - (Abstand - 10);
+				Schranke = v.RatioX(SpielerMitBall.getSchuss(), torwart.getTorwart()) - (Abstand - 10);
 				return BallAufsTor(Schranke);
 			}
 			else{
@@ -335,6 +344,27 @@ public class Spiel {
 		}
 		else{
 			p.println(text.BallDaneben());
+			return 0;
+		}	
+	}
+	
+	//case 17
+	private int querLegen(){
+		int Schranke = 20 + SpielerMitBall.getPass();
+		int roll = r.randomInteger();
+		if (roll <= Schranke){
+			if (SpielerMitBallVorher != null){
+				SpielerMitBallVorher.setBusy(false);
+			}
+			SpielerMitBallVorher = SpielerMitBall;
+			SpielerMitBallVorher.setBusy(true);
+			SpielerMitBall = Angriff.getPlayerFrom("ZM", "OM", "RM", "LM");
+			p.println("Und legt den Ball auf " + SpielerMitBall.getNamePosition() + " quer.");
+			return 21; //Spieler mit Ball zentral am Sechzehner
+		}
+		else {
+			Spieler verteidiger = Verteidigung.getPlayerFrom("VER");
+			p.println("Und versucht quer zu legen, aber " + verteidiger.getNamePosition() + " f‰ngt den Ball ab und kl‰rt. ");
 			return 0;
 		}
 		
@@ -348,7 +378,7 @@ public class Spiel {
 		if ( roll <= Schranke) {			
 			p.println("Der kommt gut ");
 			Spieler torwart = Verteidigung.getPlayerFrom("TW");
-			Schranke = v.RationX(SpielerMitBall.getKopfball(), torwart.getTorwart());
+			Schranke = v.RatioX(SpielerMitBall.getKopfball(), torwart.getTorwart());
 			return BallAufsTor(Schranke);
 		}
 		else {
@@ -361,7 +391,7 @@ public class Spiel {
 	private int kopfballduell(){
 		Spieler angreifer = Angriff.getPlayerFrom("ST", "OM", "ZM");
 		Spieler verteidiger = Verteidigung.getPlayerFrom("LI", "IV", "MD");
-		int Schranke = (int)(Flankenqualitaet) + v.RationX(angreifer.getKopfball(), verteidiger.getKopfball());
+		int Schranke = (int)(Flankenqualitaet) + v.RatioX(angreifer.getKopfball(), verteidiger.getKopfball());
 		int roll = r.randomInteger();
 
 		if ( roll <= Schranke) {
@@ -370,6 +400,7 @@ public class Spiel {
 				SpielerMitBallVorher.setBusy(false);
 			}
 			SpielerMitBallVorher = SpielerMitBall;
+			SpielerMitBallVorher.setBusy(true);
 			SpielerMitBall = angreifer;
 			return 18; //Kopfball
 		}
@@ -399,6 +430,7 @@ public class Spiel {
 				SpielerMitBallVorher.setBusy(false);
 			}
 			SpielerMitBallVorher = SpielerMitBall;
+			SpielerMitBallVorher.setBusy(true);
 			SpielerMitBall = Angriff.getPlayerFrom("OM", "ZM", "ST");
 			return 18; //Kopfball
 		}
@@ -407,6 +439,30 @@ public class Spiel {
 		}
 		else{
 			return 0;
+		}
+	}
+	
+	//case 21
+	private int zentralAmSechzehner(){
+		Spieler verteidiger = Verteidigung.getPlayerFrom("VER");
+		int Schranke = v.RatioX(SpielerMitBall.getStellungsspiel(), verteidiger.getStellungsspiel());
+		int roll = r.randomInteger();
+		if (roll <= Schranke){
+			p.println("Er steht komplett alleine. ");
+			Schranke = v.RatioX(SpielerMitBall.getAntizipation(), SpielerMitBall.getSelbstbewusstsein());
+			roll = r.randomInteger();
+			if (roll <= Schranke){
+				return 23; //Ball durchstecken
+			}
+			else{
+				return 22; //Schuss vom Sechzehner zentral
+			}
+		}
+		else{
+			p.println(verteidiger.getNamePosition() + " stellt ihn. ");
+			if(Dribbling(SpielerMitBall, verteidiger)){
+				
+			}
 		}
 	}
 	
@@ -491,6 +547,7 @@ public class Spiel {
 		int roll = r.randomInteger();
 		if (roll <= schranke){
 			p.println("und l‰sst " + verteidiger.getNamePosition() + " stehen. ");
+			verteidiger.setBusy(true);
 			if (GegnerVorher != null){
 				GegnerVorher.setBusy(false);
 			}

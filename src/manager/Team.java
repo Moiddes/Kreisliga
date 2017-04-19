@@ -185,8 +185,29 @@ public class Team {
 
 	public Spieler getPlayerFrom(String... strings){
 		List<String> positions = new ArrayList<String>();
-		for(int i = 0; i < strings.length; i++){
-			positions.add(strings[i]);
+		if (strings[0] == "VER"){
+			positions.add("LI");
+			positions.add("IV");
+			positions.add("MD");
+			positions.add("RV");
+			positions.add("LV");
+		}
+		else if (strings[0] == "MIT"){
+			positions.add("DM");
+			positions.add("LM");
+			positions.add("ZM");
+			positions.add("RM");
+			positions.add("OM");
+		}
+		else if (strings[0] == "OFF"){
+			positions.add("ZM");
+			positions.add("OM");
+			positions.add("ST");
+		}
+		else{
+			for(int i = 0; i < strings.length; i++){
+				positions.add(strings[i]);
+			}
 		}
 		List<Spieler> possiblePlayers = new ArrayList<Spieler>();
 		for(String position : positions){

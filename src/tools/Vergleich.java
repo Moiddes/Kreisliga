@@ -3,7 +3,7 @@ package tools;
 
 public class Vergleich {
 	
-	public int RationX(int x, int y){
+	public int RatioX(int x, int y){
 		return ((int) ((double) x/(double) x + (double) y));
 	}
 	
