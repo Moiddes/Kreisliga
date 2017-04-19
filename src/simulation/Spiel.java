@@ -105,7 +105,8 @@ public class Spiel {
 				ThisEvent = Ecke();
 				break;
 			case 21: //Spieler mit Ball zentral am Sechzehner
-				
+				ThisEvent = zentralAmSechzehner();
+				break;
 			case 22: //Fernschuss Sechzehner zentral
 				ThisEvent = Schuss(16);
 				break;
@@ -461,8 +462,16 @@ public class Spiel {
 		else{
 			p.println(verteidiger.getNamePosition() + " stellt ihn. ");
 			if(Dribbling(SpielerMitBall, verteidiger)){
-				
+				Schranke = v.RatioX(SpielerMitBall.getAntizipation(), SpielerMitBall.getSelbstbewusstsein());
+				roll = r.randomInteger();
+				if (roll <= Schranke){
+					return 23; //Ball durchstecken
+				}
+				else{
+					return 22; //Schuss vom Sechzehner zentral
+				}
 			}
+			else return 0;
 		}
 	}
 	
@@ -525,7 +534,7 @@ public class Spiel {
 		int roll = r.randomInteger();
 		if (roll <= Schranke/6) {
 			p.println(text.EckeSehrGut());
-			return 100.0;	
+			return 100.0;
 		}
 		else if(roll <= 5*Schranke/6 && roll > Schranke/6){
 			p.println(text.EckeGut());
