@@ -10,7 +10,7 @@ import java.util.Random;
 import tools.Vergleich;
 
 
-public class Team implements java.io.Serializable {
+public class Team implements java.io.Serializable { 
 
 	private Map<String, Spieler> team = new HashMap<String, Spieler>();  
 	private String teamName;
